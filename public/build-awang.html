@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Build Awang Textured GLB</title>
+  <style>
+    body, html, canvas { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; background: #161a20; }
+  </style>
+</head>
+<body>
+  <canvas id="renderCanvas"></canvas>
+  <script type="module">
+    import * as BABYLON from '/node_modules/@babylonjs/core/index.js';
+    import '/node_modules/@babylonjs/loaders/OBJ/index.js';
+    import '/node_modules/@babylonjs/loaders/glTF/index.js';
+    import { GLTF2Export } from '/node_modules/@babylonjs/serializers/glTF/index.js';
+
+    window.BABYLON = BABYLON;
+    window.GLTF2Export = GLTF2Export;
+
+    // 1. Generate 2048x2048 Texture Atlas
+    const texCanvas = document.createElement("canvas");
+    texCanvas.width = 2048;
+    texCanvas.height = 2048;
+    const ctx = texCanvas.getContext("2d");
+
+    // Dark neutral background
+    ctx.fillStyle = "#1e2126";
+    ctx.fillRect(0, 0, 2048, 2048);
+
+    // Color definitions based on awang.png reference:
+    const COL_SUIT = "#dedad1";      // Light beige / warm grey
+    const COL_SUIT_SHADOW = "#c5c0b5";
+    const COL_TROUSERS = "#1c1e23";  // Dark charcoal trousers
+    const COL_SHOES = "#131416";     // Black dress shoes
+    const COL_HAIR = "#131416";      // Deep black hair
+    const COL_SKIN = "#dfb496";      // Warm skin tone
+    const COL_SHIRT = "#f6f7fa";     // Crisp white shirt
+    const COL_TIE = "#15171d";       // Dark black/navy tie
+    const COL_GLASSES = "#141518";   // Black glasses frames
+
+    // Helper functions for front/back chart pixel locations
+    // Front chart: X in [82, 983] (width 901), Y in [82, 1966] (height 1884)
+    // Back chart:  X in [1065, 1966] (width 901), Y in [82, 1966] (height 1884)
+    // Flipped so text is rendered in standard orientation
+    const fx = (normX) => Math.round(82 + 901 * (1.0 - normX));
+    const fy = (normY) => Math.round(82 + 1884 * normY);
+    const bx = (normX) => Math.round(1065 + 901 * normX);
+
+    // ==========================================
+    // FRONT CHART
+    // ==========================================
+
+    // 1. Trousers (Y: 1072 to 1735)
+    ctx.fillStyle = COL_TROUSERS;
+    ctx.fillRect(82, 1072, 901, 663);
+    // Trouser crease lines
+    ctx.strokeStyle = "#282a32";
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(fx(0.35), 1072); ctx.lineTo(fx(0.35), 1735);
+    ctx.moveTo(fx(0.65), 1072); ctx.lineTo(fx(0.65), 1735);
+    ctx.stroke();
+
+    // 2. Shoes (Y: 1735 to 1966)
+    ctx.fillStyle = COL_SHOES;
+    ctx.fillRect(82, 1735, 901, 231);
+    // Subtle sole rim
+    ctx.fillStyle = "#26282e";
+    ctx.fillRect(82, 1930, 901, 36);
+
+    // 3. Suit Jacket Body & Sleeves (Y: 417 to 1072)
+    ctx.fillStyle = COL_SUIT;
+    ctx.fillRect(82, 417, 901, 655);
+
+    // Subtle wool weave texture
+    ctx.fillStyle = "rgba(195, 190, 180, 0.25)";
+    for (let y = 417; y <= 1072; y += 4) {
+      ctx.fillRect(82, y, 901, 1);
+    }
+    for (let x = 82; x <= 983; x += 4) {
+      ctx.fillRect(x, 417, 1, 655);
+    }
+
+    // Suit lapel fold lines & center front opening
+    ctx.strokeStyle = COL_SUIT_SHADOW;
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    // Center button line
+    ctx.moveTo(fx(0.50), 540);
+    ctx.lineTo(fx(0.50), 1072);
+    // Left & Right lapels
+    ctx.moveTo(fx(0.38), 417);
+    ctx.lineTo(fx(0.48), 540);
+    ctx.moveTo(fx(0.62), 417);
+    ctx.lineTo(fx(0.52), 540);
+    ctx.stroke();
+
+    // Suit buttons
+    ctx.fillStyle = "#333740";
+    ctx.beginPath();
+    ctx.arc(fx(0.50), 620, 7, 0, Math.PI * 2);
+    ctx.arc(fx(0.50), 710, 7, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Suit pockets
+    ctx.fillStyle = COL_SUIT_SHADOW;
+    ctx.fillRect(fx(0.20), 730, 110, 12);
+    ctx.fillRect(fx(0.68), 730, 110, 12);
+
+    // 4. White Shirt & Collar (Y: 417 to 540, center)
+    ctx.fillStyle = COL_SHIRT;
+    ctx.beginPath();
+    ctx.moveTo(fx(0.43), 417);
+    ctx.lineTo(fx(0.57), 417);
+    ctx.lineTo(fx(0.50), 540);
+    ctx.closePath();
+    ctx.fill();
+
+    // 5. Necktie (Y: 460 to 820, center)
+    ctx.fillStyle = COL_TIE;
+    ctx.beginPath();
+    ctx.moveTo(fx(0.48), 460);
+    ctx.lineTo(fx(0.52), 460);
+    ctx.lineTo(fx(0.53), 780);
+    ctx.lineTo(fx(0.50), 820);
+    ctx.lineTo(fx(0.47), 780);
+    ctx.closePath();
+    ctx.fill();
+
+    // 6. Hands at sides (Y: 880 to 1150, X < 200 or X > 865)
+    ctx.fillStyle = COL_SKIN;
+    ctx.fillRect(82, 880, 118, 270);
+    ctx.fillRect(865, 880, 118, 270);
+
+    // 7. Head & Neck
+    // Neck: Y in [380, 430], X around center
+    ctx.fillStyle = COL_SKIN;
+    ctx.fillRect(fx(0.42), 380, fx(0.58) - fx(0.42), 50);
+
+    // Face: Y in [205, 380], X around center
+    ctx.fillRect(fx(0.62), 205, fx(0.38) - fx(0.62), 175);
+
+    // Eyebrows
+    ctx.fillStyle = COL_HAIR;
+    ctx.fillRect(fx(0.58), 250, 48, 12);
+    ctx.fillRect(fx(0.46), 250, 48, 12);
+
+    // Glasses: Thick dark frames matching awang.png
+    ctx.strokeStyle = COL_GLASSES;
+    ctx.lineWidth = 9;
+    // Left lens frame (character's left / viewer's right)
+    ctx.strokeRect(fx(0.58), 265, 52, 40);
+    // Right lens frame (character's right / viewer's left)
+    ctx.strokeRect(fx(0.46), 265, 52, 40);
+    // Bridge
+    ctx.beginPath();
+    ctx.moveTo(fx(0.58) + 52, 280);
+    ctx.lineTo(fx(0.46), 280);
+    ctx.stroke();
+
+    // Lens reflection sheen
+    ctx.fillStyle = "rgba(180, 210, 240, 0.4)";
+    ctx.fillRect(fx(0.58) + 5, 270, 42, 30);
+    ctx.fillRect(fx(0.46) + 5, 270, 42, 30);
+
+    // Moustache under nose: Solid dark rectangle
+    ctx.fillStyle = COL_HAIR;
+    ctx.fillRect(fx(0.54), 324, 72, 20);
+
+    // Stern downward mouth line
+    ctx.strokeStyle = "#4a2a1e";
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(fx(0.56), 362);
+    ctx.lineTo(fx(0.50), 356);
+    ctx.lineTo(fx(0.44), 362);
+    ctx.stroke();
+
+    // 8. Hair on front: Top and side parting (Y: 82 to 215)
+    ctx.fillStyle = COL_HAIR;
+    ctx.fillRect(fx(0.64), 82, fx(0.36) - fx(0.64), 133);
+    // Sideburns
+    ctx.fillRect(fx(0.64), 215, 24, 75);
+    ctx.fillRect(fx(0.39), 215, 24, 75);
+    // Hair parted highlight
+    ctx.fillStyle = "#22242b";
+    ctx.fillRect(fx(0.58), 95, 60, 10);
+
+    // 9. AWANG Name Badge: On Left Chest (viewer's right, X in [315, 442])
+    {
+      const bx0 = 315, by0 = 580, bw = 126, bh = 95;
+      // White badge card
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(bx0, by0, bw, bh);
+
+      // Dark solid border
+      ctx.strokeStyle = "#141519";
+      ctx.lineWidth = 10;
+      ctx.strokeRect(bx0 + 5, by0 + 5, bw - 10, bh - 10);
+
+      // Gold top corporate bar
+      ctx.fillStyle = "#c59b27";
+      ctx.fillRect(bx0 + 10, by0 + 10, bw - 20, 14);
+
+      // Navy corporate sub-bar
+      ctx.fillStyle = "#1e3a62";
+      ctx.fillRect(bx0 + 10, by0 + 24, bw - 20, 8);
+
+      // Bold centered AWANG text (strictly matching reference image)
+      ctx.fillStyle = "#111215";
+      ctx.font = "bold 36px sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("AWANG", bx0 + bw / 2, by0 + 58);
+    }
+
+    // ==========================================
+    // BACK CHART (X: 1065 to 1966)
+    // ==========================================
+
+    // 1. Trousers Back
+    ctx.fillStyle = COL_TROUSERS;
+    ctx.fillRect(1065, 1072, 901, 663);
+
+    // 2. Shoes Back
+    ctx.fillStyle = COL_SHOES;
+    ctx.fillRect(1065, 1735, 901, 231);
+
+    // 3. Suit Jacket Back
+    ctx.fillStyle = COL_SUIT;
+    ctx.fillRect(1065, 417, 901, 655);
+
+    // Subtle wool weave
+    ctx.fillStyle = "rgba(195, 190, 180, 0.25)";
+    for (let y = 417; y <= 1072; y += 4) {
+      ctx.fillRect(1065, y, 901, 1);
+    }
+    for (let x = 1065; x <= 1966; x += 4) {
+      ctx.fillRect(x, 417, 1, 655);
+    }
+
+    // Center back seam & vent
+    ctx.strokeStyle = COL_SUIT_SHADOW;
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(bx(0.50), 417);
+    ctx.lineTo(bx(0.50), 1072);
+    ctx.stroke();
+
+    // 4. Back of Hair: Full coverage
+    ctx.fillStyle = COL_HAIR;
+    ctx.fillRect(bx(0.66), 82, bx(0.34) - bx(0.66), 335);
+
+    // Save PNG Data URL
+    const pngDataUrl = texCanvas.toDataURL("image/png");
+    window.pngBase64 = pngDataUrl.split(",")[1];
+    console.log("Texture atlas generated, PNG base64 length:", window.pngBase64.length);
+
+    // 2. Set up Babylon Scene
+    const renderCanvas = document.getElementById("renderCanvas");
+    const engine = new BABYLON.Engine(renderCanvas, true);
+    const scene = new BABYLON.Scene(engine);
+    scene.clearColor = new BABYLON.Color4(0.1, 0.12, 0.15, 1.0);
+
+    const camera = new BABYLON.ArcRotateCamera("cam", Math.PI / 2, Math.PI / 2, 3.2, new BABYLON.Vector3(0, 0, 0), scene);
+    camera.minZ = 0.05;
+    camera.attachControl(renderCanvas, true);
+
+    const hemi = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
+    hemi.intensity = 0.9;
+    const dir = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(0.5, -0.8, -1), scene);
+    dir.intensity = 0.8;
+    const rim = new BABYLON.DirectionalLight("rim", new BABYLON.Vector3(-0.5, 0.5, 1), scene);
+    rim.intensity = 0.6;
+
+    // Load mesh data
+    window.buildStatus = "loading_mesh";
+    fetch("/assets/awang/mesh_with_uvs.json")
+      .then(res => res.json())
+      .then(async (meshData) => {
+        console.log("Mesh data loaded, vertices:", meshData.positions.length / 3);
+
+        const customMesh = new BABYLON.Mesh("awangTextured", scene);
+        const vertexData = new BABYLON.VertexData();
+        vertexData.positions = new Float32Array(meshData.positions);
+        vertexData.normals = new Float32Array(meshData.normals);
+        vertexData.uvs = new Float32Array(meshData.uvs);
+        vertexData.indices = new Uint32Array(meshData.indices);
+        vertexData.applyToMesh(customMesh);
+
+        // PBR Material with invertY = false to match texture coordinates directly
+        const mat = new BABYLON.PBRMaterial("awangPbrMat", scene);
+        const tex = new BABYLON.Texture(pngDataUrl, scene, false, false);
+        mat.albedoTexture = tex;
+        mat.roughness = 0.82;
+        mat.metallic = 0.04;
+        mat.backFaceCulling = false;
+        customMesh.material = mat;
+
+        window.customMesh = customMesh;
+        window.buildStatus = "exporting_glb";
+
+        // Export to GLB
+        const gltf = await GLTF2Export.GLBAsync(scene, "awang-textured", {
+          shouldExportNode: (node) => node === customMesh
+        });
+        const blob = gltf.glTFFiles["awang-textured.glb"];
+        console.log("GLB exported, size:", blob.size);
+
+        // Convert blob to base64
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          window.glbBase64 = reader.result.split(",")[1];
+          window.glbSize = blob.size;
+          window.buildStatus = "done";
+          console.log("GLB base64 ready, size:", blob.size);
+        };
+        reader.readAsDataURL(blob);
+      })
+      .catch(err => {
+        console.error("Build error:", err);
+        window.buildError = err.message;
+        window.buildStatus = "error";
+      });
+
+    engine.runRenderLoop(() => {
+      scene.render();
+    });
+
+    window.setCameraView = (view) => {
+      if (view === 'front') {
+        camera.alpha = Math.PI / 2; // looking at character front (-Z)
+        camera.beta = Math.PI / 2;
+        camera.target = new BABYLON.Vector3(0, 0, 0);
+        camera.radius = 3.0;
+      } else if (view === 'back') {
+        camera.alpha = -Math.PI / 2;
+        camera.beta = Math.PI / 2;
+        camera.target = new BABYLON.Vector3(0, 0, 0);
+        camera.radius = 3.0;
+      } else if (view === 'side') {
+        camera.alpha = 0;
+        camera.beta = Math.PI / 2;
+        camera.target = new BABYLON.Vector3(0, 0, 0);
+        camera.radius = 3.0;
+      } else if (view === 'face') {
+        camera.alpha = Math.PI / 2;
+        camera.beta = Math.PI / 2;
+        camera.target = new BABYLON.Vector3(0, 0.72, 0);
+        camera.radius = 0.75;
+      } else if (view === 'badge') {
+        camera.alpha = Math.PI / 2;
+        camera.beta = Math.PI / 2;
+        camera.target = new BABYLON.Vector3(0.14, 0.39, 0);
+        camera.radius = 0.45;
+      }
+    };
+  </script>
+</body>
+</html>

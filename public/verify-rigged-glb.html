@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Verify Awang Rigged GLB</title>
+  <style>
+    body, html, canvas { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; background: #1a1e24; }
+  </style>
+</head>
+<body>
+  <canvas id="renderCanvas"></canvas>
+  <script type="module">
+    import * as BABYLON from '/node_modules/@babylonjs/core/index.js';
+    import '/node_modules/@babylonjs/loaders/glTF/index.js';
+    window.BABYLON = BABYLON;
+
+    const canvas = document.getElementById("renderCanvas");
+    const engine = new BABYLON.Engine(canvas, true);
+    const scene = new BABYLON.Scene(engine);
+    window.scene = scene;
+    scene.clearColor = new BABYLON.Color4(0.1, 0.12, 0.15, 1.0);
+
+    const camera = new BABYLON.ArcRotateCamera("cam", Math.PI / 2, Math.PI / 2, 3.0, new BABYLON.Vector3(0, 0, 0), scene);
+    camera.minZ = 0.05;
+    camera.attachControl(canvas, true);
+
+    const hemi = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
+    hemi.intensity = 0.9;
+    const dir = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(0.5, -0.8, -1), scene);
+    dir.intensity = 0.8;
+    const rim = new BABYLON.DirectionalLight("rim", new BABYLON.Vector3(-0.5, 0.5, 1), scene);
+    rim.intensity = 0.6;
+
+    window.glbStatus = "loading";
+
+    BABYLON.SceneLoader.ImportMeshAsync("", "/assets/awang/", "awang-rigged.glb", scene).then((result) => {
+      console.log("Loaded rigged meshes:", result.meshes.length);
+      console.log("Skeletons:", result.skeletons.length);
+      console.log("Animation groups:", result.animationGroups.length);
+
+      window.glbMeshes = result.meshes.length;
+      window.skeletonsCount = result.skeletons.length;
+      window.animGroups = result.animationGroups.map(ag => ag.name);
+
+      if (result.skeletons.length > 0) {
+        window.bones = result.skeletons[0].bones.map(b => b.name);
+      }
+
+      window.result = result;
+      window.glbStatus = "loaded";
+    }).catch(err => {
+      console.error("Rigged GLB load error:", err);
+      window.glbStatus = "error";
+      window.glbError = err.message;
+    });
+
+    window.playAnimation = (animName, timeInSeconds = null) => {
+      if (!window.result) return;
+      for (const ag of window.result.animationGroups) {
+        ag.stop();
+        ag.reset();
+      }
+      const target = window.result.animationGroups.find(ag => ag.name === animName);
+      if (target) {
+        if (timeInSeconds !== null) {
+          target.play(true);
+          target.goToFrame(timeInSeconds);
+          target.pause();
+        } else {
+          target.play(true);
+        }
+        return `Playing ${animName} at ${timeInSeconds}s`;
+      }
+      return `Not found: ${animName}`;
+    };
+
+    engine.runRenderLoop(() => {
+      scene.render();
+    });
+  </script>
+</body>
+</html>

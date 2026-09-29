@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body {
+    margin: 0;
+    padding: 40px;
+    background: #0f172a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+  }
+  .card {
+    background: rgba(12, 16, 24, 0.78);
+    backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-top: 1px solid rgba(212, 182, 133, 0.6);
+    border-radius: 18px;
+    padding: 30px 40px;
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  }
+  .title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    background: linear-gradient(180deg, #ffffff 25%, #d9bc8c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    line-height: 1.1;
+  }
+  .subtitle {
+    font-size: 1.05rem;
+    color: #e2e8f0;
+    margin: 0;
+  }
+  .btn {
+    background: linear-gradient(180deg, #d4b685 0%, #a88a59 100%);
+    color: #0c0f14;
+    border: none;
+    border-radius: 9999px;
+    font-weight: 600;
+    padding: 10px 36px;
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+
+  /* Style A: Pill Badge with white background */
+  .badge-a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    padding: 3px 12px;
+    border-radius: 9999px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .badge-a img {
+    width: 140px;
+    height: auto;
+    display: block;
+  }
+
+  /* Style B: Soft Frosted White Capsule */
+  .badge-b {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 4px 14px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  }
+  .badge-b img {
+    width: 135px;
+    height: auto;
+    display: block;
+  }
+
+  /* Style C: Subtle dark frame with white inner tab */
+  .badge-c {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 3px 6px;
+    border-radius: 8px;
+  }
+  .badge-c .inner {
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 2px 8px;
+    display: flex;
+    align-items: center;
+  }
+  .badge-c img {
+    width: 130px;
+    height: auto;
+    display: block;
+  }
+
+  /* Style D: Seamless unified badge */
+  .badge-d {
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2);
+    padding-right: 8px;
+  }
+  .badge-d img {
+    width: 140px;
+    height: auto;
+    display: block;
+  }
+</style>
+</head>
+<body>
+  <h2>Comparison of KadoshAI Brand Endorsement Styles</h2>
+
+  <div>
+    <h3>Option A: Sleek Rounded White Pill (140px)</h3>
+    <div class="card">
+      <div class="badge-a">
+        <img src="/assets/branding/kadoshai-logo.png" alt="KadoshAI" />
+      </div>
+      <h1 class="title">Catchup</h1>
+      <p class="subtitle">Missed a session? We've got you covered.</p>
+      <button class="btn">Start</button>
+    </div>
+  </div>
+
+  <div>
+    <h3>Option B: Soft Frosted Capsule (135px)</h3>
+    <div class="card">
+      <div class="badge-b">
+        <img src="/assets/branding/kadoshai-logo.png" alt="KadoshAI" />
+      </div>
+      <h1 class="title">Catchup</h1>
+      <p class="subtitle">Missed a session? We've got you covered.</p>
+      <button class="btn">Start</button>
+    </div>
+  </div>
+
+  <div>
+    <h3>Option C: Subtle Inset Corporate Tab (130px)</h3>
+    <div class="card">
+      <div class="badge-c">
+        <div class="inner">
+          <img src="/assets/branding/kadoshai-logo.png" alt="KadoshAI" />
+        </div>
+      </div>
+      <h1 class="title">Catchup</h1>
+      <p class="subtitle">Missed a session? We've got you covered.</p>
+      <button class="btn">Start</button>
+    </div>
+  </div>
+
+  <div>
+    <h3>Option D: Premium Rounded Corporate Badge (140px)</h3>
+    <div class="card">
+      <div class="badge-d">
+        <img src="/assets/branding/kadoshai-logo.png" alt="KadoshAI" />
+      </div>
+      <h1 class="title">Catchup</h1>
+      <p class="subtitle">Missed a session? We've got you covered.</p>
+      <button class="btn">Start</button>
+    </div>
+  </div>
+</body>
+</html>
