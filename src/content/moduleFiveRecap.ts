@@ -13,7 +13,7 @@ export const moduleFiveRecap: LessonRecap = {
   moduleId: "module-5",
   title: "Module 5 · AI Ethics, Privacy and Security at Work",
   durationSec: 600,
-  prototypeNote: "Full production recap (~10 minutes) · Grounded in Level 1 Handbook (Ethics, Privacy & Security).",
+  prototypeNote: "Full production recap (~10 minutes) · Grounding AI in corporate governance, Malaysia AIGE 2024 guidelines, and PDPA 2024 amendments.",
   beats: [
     {
       id: "m5-intro",
@@ -28,6 +28,7 @@ export const moduleFiveRecap: LessonRecap = {
       },
       narration:
         "Welcome to Module 5: AI Ethics, Privacy and Security at Work. Speed without safety leads to catastrophe. When employees paste confidential customer records or trade secrets into public AI tools, companies face massive regulatory fines and reputational ruin. In this 10-minute recap, you will master the ethical, legal, and operational guardrails required for responsible enterprise AI use.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-5/intro.mp3`,
     },
     {
       id: "m5-pillars",
@@ -47,6 +48,7 @@ export const moduleFiveRecap: LessonRecap = {
       },
       narration:
         "Responsible corporate AI rests on five non-negotiable pillars: Transparency, Fairness, Accountability, Privacy, and Reliability. Notice Pillar 3: Accountability always remains with the human professional. You can never blame an algorithm for an erroneous or non-compliant business decision.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-5/pillars.mp3`,
     },
     {
       id: "m5-aige-framework",
@@ -55,7 +57,7 @@ export const moduleFiveRecap: LessonRecap = {
       camera: "board",
       board: {
         kind: "scorecardTable",
-        heading: "Malaysia Regulatory Matrix: AIGE 2024 Ethics vs. PDPA 2024 Law (Handbook pp. 45–46)",
+        heading: "Malaysia Regulatory Matrix: AIGE 2024 Ethics vs. PDPA 2024 Law",
         headers: ["Governance Dimension", "Malaysia AIGE 2024 (Ethics)", "PDPA 2024 Amendments (Statute)", "Workplace Compliance Rule"],
         rows: [
           {
@@ -95,10 +97,11 @@ export const moduleFiveRecap: LessonRecap = {
             highlight: "red",
           },
         ],
-        note: "Handbook Rule: AIGE guides ethical development; PDPA 2024 imposes binding corporate criminal and civil liability.",
+        note: "Legal Principle: AIGE guides ethical development; PDPA 2024 imposes binding corporate criminal and civil liability.",
       },
       narration:
         "In Malaysia, governance is anchored by two frameworks: the National AI Governance and Ethics guidelines issued in 2024, and the landmark 2024 amendments to the Personal Data Protection Act. While AIGE sets ethical benchmarks for fairness and transparency, the PDPA amendments carry binding statutory weight—including mandatory DPOs, strict 72-hour breach reporting, and fines up to RM 1,000,000.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-5/aige-framework.mp3`,
     },
     {
       id: "m5-data-handling",
@@ -107,7 +110,7 @@ export const moduleFiveRecap: LessonRecap = {
       camera: "board",
       board: {
         kind: "governanceCard",
-        heading: "Corporate AI Governance Scorecard (Handbook p. 50 & JLG Transcript)",
+        heading: "Corporate AI Governance Compliance Scorecard",
         redFlags: [
           {
             title: "Pasting Unredacted Customer PII",
@@ -138,7 +141,8 @@ export const moduleFiveRecap: LessonRecap = {
         ],
       },
       narration:
-        "On your board is the Red Flag versus Green Flag governance scorecard from page 50 of the handbook. The red flags represent serious corporate compliance hazards: pasting unredacted NRICs, accepting unverified numbers, and using free consumer accounts. The green flags represent disciplined enterprise habits: working within protected tenants, anonymizing identifiers, and maintaining human accountability for every deliverable.",
+        "On your board is the Red Flag versus Green Flag governance compliance scorecard. The red flags represent serious corporate compliance hazards: pasting unredacted NRICs, accepting unverified numbers, and using free consumer accounts. The green flags represent disciplined enterprise habits: working within protected tenants, anonymizing identifiers, and maintaining human accountability for every deliverable.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-5/data-handling.mp3`,
     },
     {
       id: "m5-enterprise-optout",
@@ -152,6 +156,7 @@ export const moduleFiveRecap: LessonRecap = {
       },
       narration:
         "Understanding enterprise data isolation is critical for every department manager. Free consumer tiers typically reserve the right to train future models on user queries. Enterprise tenants provide legal guarantees that your data stays inside your corporate perimeter, is never retained by the vendor, and is never used to train public models.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-5/enterprise-optout.mp3`,
     },
     {
       id: "m5-red-lines",
@@ -181,46 +186,12 @@ export const moduleFiveRecap: LessonRecap = {
       },
       narration:
         "Memorize these three corporate red lines: Number 1, no unredacted personal data. Number 2, no trade secrets or merger plans in external tools. And Number 3, no blind automation where AI makes consequential life-impacting decisions without human review.",
-    },
-    {
-      id: "m5-knowledge-check",
-      startSec: 510,
-      hudLabel: "7. Knowledge Check",
-      camera: "board",
-      board: {
-        kind: "takeaway",
-        heading: "Module 5 Knowledge Check",
-        text: "What is the key difference between using a personal consumer AI account versus an enterprise-licensed AI tenant?",
-      },
-      narration:
-        "Let us test our understanding of corporate privacy and data governance.",
-      knowledgeCheck: {
-        question:
-          "Why must employees use approved enterprise AI accounts instead of personal free consumer AI tools for company business?",
-        options: [
-          {
-            id: "a",
-            label: "Because personal accounts are slower and have fewer visual fonts available.",
-          },
-          {
-            id: "b",
-            label:
-              "Because approved enterprise accounts include commercial data protection, ensuring corporate data is not retained, viewed by third parties, or used to train public foundation models.",
-          },
-          {
-            id: "c",
-            label: "Because personal accounts require users to be physically connected to company Wi-Fi.",
-          },
-        ],
-        correctId: "b",
-        confirmText:
-          "Correct! Enterprise licenses offer binding contractual protections: your prompts and documents remain confidential within your corporate tenant and are strictly exempt from being used to train public models.",
-      },
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-5/red-lines.mp3`,
     },
     {
       id: "m5-takeaways",
-      startSec: 570,
-      hudLabel: "8. Key Takeaways",
+      startSec: 510,
+      hudLabel: "7. Key Takeaways",
       camera: "wide",
       board: {
         kind: "takeaway",
@@ -228,7 +199,22 @@ export const moduleFiveRecap: LessonRecap = {
         text: "1. Human accountability is non-negotiable: you are responsible for the final output.\n2. Comply with Malaysia's AIGE 2024 and PDPA 2024 amendments.\n3. Anonymize all personal data and customer identifiers before prompting.\n4. Ensure commercial zero-data-retention agreements are in place.\n5. Uphold corporate red lines against blind automation in critical decisions.",
       },
       narration:
-        "To conclude Module 5: Responsible AI is not an obstacle to innovation; it is the prerequisite for sustainable corporate adoption. By respecting privacy, protecting commercial assets, and keeping human judgment at the center, you protect both your company and your career. Now, let us advance to Module 6: Putting AI into Practice.",
+        "To conclude Module 5: Responsible AI is not an obstacle to innovation; it is the prerequisite for sustainable corporate adoption. By respecting privacy, protecting commercial assets, and keeping human judgment at the center, you protect both your company and your career. Proceed to the knowledge check and confidence self-report.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-5/takeaways.mp3`,
+    },
+    {
+      id: "m5-assessment",
+      startSec: 575,
+      hudLabel: "8. Knowledge Check (Quiz & Report)",
+      camera: "instructor",
+      board: {
+        kind: "takeaway",
+        heading: "Module 5 Knowledge Check & Self-Report",
+        text: "Complete the 5-question knowledge check and 4-item confidence self-report to complete Module 5.",
+      },
+      narration:
+        "Now, let us complete the five-question knowledge check and confidence self-report for Module 5.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-5/assessment.mp3`,
     },
   ],
 };

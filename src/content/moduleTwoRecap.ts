@@ -21,7 +21,7 @@ export const moduleTwoRecap: LessonRecap = {
   moduleId: "module-2",
   title: "Module 2 · Smart Comparison Made Easy with AI",
   durationSec: 600,
-  prototypeNote: "Full production recap (~10 minutes) · Grounded in Level 1 Handbook (Smart Comparison).",
+  prototypeNote: "Full production recap (~10 minutes) · Mastering multi-document review, variance analysis, and audit-ready verification.",
   beats: [
     {
       id: "m2-intro",
@@ -36,6 +36,7 @@ export const moduleTwoRecap: LessonRecap = {
       },
       narration:
         "Welcome to Module 2: Smart Comparison Made Easy with AI. In corporate operations, comparing multi-page contracts, revised policy versions, and financial statements can consume days of tedious manual review. In this 10-minute recap, you will learn the authoritative 7-step comparison workflow that transforms hours of manual line-by-line reading into minutes of sharp, exception-focused analysis.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-2/intro.mp3`,
     },
     {
       id: "m2-workflow",
@@ -44,7 +45,7 @@ export const moduleTwoRecap: LessonRecap = {
       camera: "board",
       board: {
         kind: "processFlow",
-        heading: "The 7-Step Smart Comparison Workflow (Handbook pp. 16–17)",
+        heading: "The 7-Step Smart Comparison Workflow",
         steps: [
           {
             stepNumber: 1,
@@ -86,7 +87,8 @@ export const moduleTwoRecap: LessonRecap = {
         ],
       },
       narration:
-        "Here is the authoritative 7-step comparison workflow from pages 16 and 17 of the handbook: Step 1, Data Collection. Step 2, Define Objective. Step 3, Gather Files. Step 4, AI Comparison. Step 5, Review and Validate. Step 6, Document Outcome. And Step 7, Take Follow-Up Action. This disciplined sequence ensures nothing is missed and every finding is audit-ready.",
+        "Here is the authoritative 7-step comparison workflow for enterprise review: Step 1, Data Collection. Step 2, Define Objective. Step 3, Gather Files. Step 4, AI Comparison. Step 5, Review and Validate. Step 6, Document Outcome. And Step 7, Take Follow-Up Action. This disciplined sequence ensures nothing is missed and every finding is audit-ready.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-2/workflow.mp3`,
     },
     {
       id: "m2-master-prompt",
@@ -104,6 +106,7 @@ export const moduleTwoRecap: LessonRecap = {
       },
       narration:
         "Notice the dramatic difference between a novice prompt and a professional master prompt. A weak prompt merely produces a vague narrative summary. A strong master prompt assigns an auditor role, defines a precise 4-column matrix, commands the AI to omit identical items, and forces exact page citations for total verification.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-2/master-prompt.mp3`,
     },
     {
       id: "m2-multi-doc",
@@ -112,7 +115,7 @@ export const moduleTwoRecap: LessonRecap = {
       camera: "board",
       board: {
         kind: "scorecardTable",
-        heading: "3-Way Tenancy Agreement Reconciliation Matrix (JLG & Handbook p. 19)",
+        heading: "3-Way Commercial Agreement Reconciliation Matrix",
         headers: ["Clause / Section", "File A (Internal Draft)", "File B (Counterparty Rev)", "File C (Signed Copy)", "Variance & Risk Notes"],
         rows: [
           {
@@ -156,10 +159,11 @@ export const moduleTwoRecap: LessonRecap = {
             highlight: "green",
           },
         ],
-        note: "Handbook Rule: Require side-by-side matrices with verbatim clause quotes to catch stealth deletions.",
+        note: "Auditor Rule: Require side-by-side matrices with verbatim clause quotes to catch stealth deletions.",
       },
       narration:
         "When comparing multiple versions of a contract—such as internal drafts, counterparty redlines, and signed execution copies—AI side-by-side tables catch changes that tired human eyes miss. Notice row 3: the counterparty quietly deleted the subletting prohibition clause entirely. A structured prompt immediately flagged this omission as a high-risk redline before execution.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-2/multi-doc.mp3`,
     },
     {
       id: "m2-variance",
@@ -199,12 +203,13 @@ export const moduleTwoRecap: LessonRecap = {
             subtext: "Unapproved scope change",
           },
         ],
-        narrativeTitle: "Root-Cause Variance Isolation (Handbook p. 19 Cluster B)",
+        narrativeTitle: "Root-Cause Variance & Exception Isolation",
         narrativeText:
           "The AI comparison reconciled the general ledger against vendor statements, isolating two unbudgeted social media blitzes (RM28,000) and an unnegotiated agency retainer hike (RM17,000). By prompting for percentage deviations and root causes, the model identified the exact invoice numbers that caused the 18% cost overrun.",
       },
       narration:
         "In financial and budget analysis, quantitative variance matters immensely. Never ask the AI to simply guess totals. Prompt the model to calculate the absolute difference, the percentage variance, and to explicitly isolate root causes. Here, the AI surfaces an 18% overspend—amounting to RM 45,000—and pins down the exact unapproved invoices responsible.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-2/variance.mp3`,
     },
     {
       id: "m2-exceptions",
@@ -218,6 +223,7 @@ export const moduleTwoRecap: LessonRecap = {
       },
       narration:
         "Exception hunting is where AI delivers peak business value. Humans get fatigued reading 80-page contracts and overlook subtle wording changes like 'may' instead of 'shall'. AI never gets tired. You can instruct the agent to act as a hawk for hidden liabilities, indemnities, and non-compete clauses, instantly surfacing deal-breaking deviations.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-2/exceptions.mp3`,
     },
     {
       id: "m2-validation",
@@ -231,46 +237,12 @@ export const moduleTwoRecap: LessonRecap = {
       },
       narration:
         "Remember the golden rule of AI-assisted comparison: never accept an AI finding without verifying the original page and clause citation. Always command the AI to provide exact verbatim snippets. If the model cannot point to the exact paragraph, treat the finding with skepticism until verified.",
-    },
-    {
-      id: "m2-knowledge-check",
-      startSec: 520,
-      hudLabel: "8. Knowledge Check",
-      camera: "board",
-      board: {
-        kind: "takeaway",
-        heading: "Module 2 Knowledge Check",
-        text: "What is the most critical technique to avoid hallucinations when comparing two 50-page vendor agreements?",
-      },
-      narration:
-        "Let us test our understanding of AI-driven comparison with a quick scenario check.",
-      knowledgeCheck: {
-        question:
-          "When comparing two complex commercial agreements using AI, what is the most effective way to eliminate hallucinations and guarantee audit readiness?",
-        options: [
-          {
-            id: "a",
-            label: "Ask the AI to generate a creative summary without strict formatting.",
-          },
-          {
-            id: "b",
-            label:
-              "Require structured tabular output with direct verbatim quotes and exact document page citations for every identified variance.",
-          },
-          {
-            id: "c",
-            label: "Increase the temperature setting to allow the model to infer missing contractual terms.",
-          },
-        ],
-        correctId: "b",
-        confirmText:
-          "Correct! Requiring side-by-side tabular formatting with verbatim quotes and exact page citations provides an indisputable audit trail and prevents hallucinations.",
-      },
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-2/validation.mp3`,
     },
     {
       id: "m2-takeaways",
-      startSec: 570,
-      hudLabel: "9. Key Takeaways",
+      startSec: 520,
+      hudLabel: "8. Key Takeaways",
       camera: "wide",
       board: {
         kind: "takeaway",
@@ -278,7 +250,22 @@ export const moduleTwoRecap: LessonRecap = {
         text: "1. Follow the 7-step comparison workflow for consistent rigor.\n2. Use structured Master Prompts specifying exact columns and criteria.\n3. Isolate variances and exceptions rather than re-reading identical clauses.\n4. Enforce verbatim quotes and page numbers for audit verification.\n5. Keep human judgment central: AI surfaces the differences, you decide the strategy.",
       },
       narration:
-        "To summarize Module 2: The 7-step workflow turns document comparison into a strategic advantage. Master prompts generate actionable matrices, exception hunting flags critical risks, and strict citation requirements keep the output audit-ready. You are now prepared to move into Module 3, where we build custom AI agents for your team.",
+        "To summarize Module 2: The 7-step workflow turns document comparison into a strategic advantage. Master prompts generate actionable matrices, exception hunting flags critical risks, and strict citation requirements keep the output audit-ready. You are now prepared to complete the knowledge check and confidence self-report.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-2/takeaways.mp3`,
+    },
+    {
+      id: "m2-assessment",
+      startSec: 575,
+      hudLabel: "9. Knowledge Check (Quiz & Report)",
+      camera: "instructor",
+      board: {
+        kind: "takeaway",
+        heading: "Module 2 Knowledge Check & Self-Report",
+        text: "Complete the 5-question knowledge check and 4-item confidence self-report to complete Module 2.",
+      },
+      narration:
+        "Now, let us complete the five-question knowledge check and confidence self-report for Module 2.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-2/assessment.mp3`,
     },
   ],
 };

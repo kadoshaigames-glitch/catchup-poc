@@ -1,0 +1,8 @@
+.env
+.env.*
+.env.local
+scratch/
+scripts/
+src-tauri/
+.git
+.github

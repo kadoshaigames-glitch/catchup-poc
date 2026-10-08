@@ -26,6 +26,10 @@ export type SceneCommand = {
   beatStartSec?: number;
   isPlaying?: boolean;
   questionOpen?: boolean;
+  boardZoom?: number;
+  boardPanX?: number;
+  boardPanY?: number;
+  isBoardMaximized?: boolean;
 };
 
 export class ClassroomScene {
@@ -36,6 +40,7 @@ export class ClassroomScene {
   public readonly instructor: InstructorHandle;
   public readonly choreographer: LessonChoreographer;
   private readonly boardTexture: DynamicTexture;
+  private readonly boardMat: StandardMaterial;
   private lastBoardKey = "";
   private elapsed = 0;
   private running = false;
@@ -47,6 +52,9 @@ export class ClassroomScene {
     initialModuleId = "module-1",
   ) {
     this.engine = new Engine(canvas, true, { adaptToDeviceRatio: true }, true);
+    const dpr = Math.max(1, Math.min(2.0, typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1));
+    this.engine.setHardwareScalingLevel(1 / dpr);
+
     this.scene = new Scene(this.engine);
     this.scene.skipPointerMovePicking = true;
 
@@ -67,32 +75,41 @@ export class ClassroomScene {
     board.position = new Vector3(-0.85, 1.92, -1.82);
     this.boardTexture = new DynamicTexture(
       "boardTex",
-      { width: 1280, height: 720 },
+      { width: 3840, height: 2160 },
       this.scene,
       true,
     );
+    this.boardTexture.anisotropicFilteringLevel = 16;
     this.boardTexture.uScale = -1;
     this.boardTexture.vScale = 1;
     this.boardTexture.uOffset = 1;
     this.boardTexture.vOffset = 0;
-    const boardMat = new StandardMaterial("boardMat", this.scene);
-    boardMat.diffuseTexture = this.boardTexture;
-    boardMat.emissiveTexture = this.boardTexture;
-    boardMat.emissiveColor = new Color3(1, 1, 1);
-    boardMat.disableLighting = true;
-    boardMat.backFaceCulling = false;
-    boardMat.specularColor.set(0, 0, 0);
-    board.material = boardMat;
+    this.boardMat = new StandardMaterial("boardMat", this.scene);
+    this.boardMat.diffuseTexture = this.boardTexture;
+    this.boardMat.emissiveTexture = this.boardTexture;
+    this.boardMat.emissiveColor = new Color3(1, 1, 1);
+    this.boardMat.disableLighting = true;
+    this.boardMat.backFaceCulling = false;
+    this.boardMat.specularColor.set(0, 0, 0);
+    board.material = this.boardMat;
 
     window.addEventListener("resize", this.onResize);
   }
 
   apply(command: SceneCommand): void {
     this.latestCommand = command;
-    this.rig.goTo(command.camera);
+    this.rig.goTo(command.camera, command.isBoardMaximized ?? false);
 
     if (command.moduleId) {
       this.environment.setModule(command.moduleId);
+    }
+
+    const isBoardView = command.camera === "board";
+    this.environment.setFocusMode(isBoardView);
+    if (this.boardMat) {
+      this.boardMat.emissiveColor = isBoardView
+        ? new Color3(1.15, 1.15, 1.15)
+        : new Color3(1.0, 1.0, 1.0);
     }
 
     this.choreographer.update(0, {
@@ -105,6 +122,10 @@ export class ClassroomScene {
       questionOpen: command.questionOpen,
     });
 
+    const zoom = command.boardZoom ?? 1.0;
+    const panX = command.boardPanX ?? 0;
+    const panY = command.boardPanY ?? 0;
+
     const reveal =
       command.board.kind === "layers"
         ? Math.min(
@@ -112,13 +133,13 @@ export class ClassroomScene {
             Math.max(1, Math.floor(command.localSec / 3.2) + 1),
           )
         : 0;
-    const key = `${JSON.stringify(command.board)}:${reveal}`;
+    const key = `${JSON.stringify(command.board)}:${reveal}:${zoom.toFixed(2)}:${Math.round(panX)}:${Math.round(panY)}`;
     if (key === this.lastBoardKey) {
       return;
     }
     this.lastBoardKey = key;
     const ctx = this.boardTexture.getContext() as CanvasRenderingContext2D;
-    drawBoard(ctx, command.board, command.localSec);
+    drawBoard(ctx, command.board, command.localSec, { zoom, panX, panY });
     this.boardTexture.update();
   }
 
@@ -159,7 +180,13 @@ export class ClassroomScene {
     this.engine.dispose();
   }
 
-  private onResize = (): void => {
+  public resize(): void {
+    const dpr = Math.max(1, Math.min(2.0, typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1));
+    this.engine.setHardwareScalingLevel(1 / dpr);
     this.engine.resize();
+  }
+
+  private onResize = (): void => {
+    this.resize();
   };
 }

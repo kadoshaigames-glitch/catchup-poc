@@ -1,6 +1,6 @@
 import type { CourseLesson, CourseModule } from "../types/lesson";
 
-export const ACCESS_CODE = "TTDA-L1";
+export const ACCESS_CODE = "1234KadoshAI";
 
 /**
  * Official Curriculum Hierarchy:

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-narration": "node scripts/generate_all_awang_narration.mjs"
   },
   "dependencies": {
     "@babylonjs/core": "^8.37.0",

@@ -31,7 +31,7 @@ export const moduleFourRecap: LessonRecap = {
   moduleId: "module-4",
   title: "Module 4 · Dynamic Presentation and Report with AI",
   durationSec: 600,
-  prototypeNote: "Full production recap (~10 minutes) · Grounded in Level 1 Handbook (Dynamic Presentation).",
+  prototypeNote: "Full production recap (~10 minutes) · Mastering executive decks, visual storytelling, and the presentation-first pipeline.",
   beats: [
     {
       id: "m4-intro",
@@ -46,6 +46,7 @@ export const moduleFourRecap: LessonRecap = {
       },
       narration:
         "Welcome to Module 4: Dynamic Presentation and Report with AI. In corporate life, professionals spend countless hours wrestling with slide alignment and writing wordy reports that nobody reads. In this 10-minute recap, you will discover the 'Presentation First, Then Report' workflow powered by a best-in-class three-tool AI stack.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-4/intro.mp3`,
     },
     {
       id: "m4-workflow",
@@ -54,7 +55,7 @@ export const moduleFourRecap: LessonRecap = {
       camera: "board",
       board: {
         kind: "processFlow",
-        heading: "The 'Presentation First, Then Report' Pipeline (Handbook pp. 34–38)",
+        heading: "The 'Presentation First, Then Report' Pipeline",
         steps: [
           {
             stepNumber: 1,
@@ -83,6 +84,7 @@ export const moduleFourRecap: LessonRecap = {
       },
       narration:
         "Traditional reporting starts with a 30-page document that is summarized into slides later. The modern AI approach flips this completely: first, Copilot structures the narrative and thinks through key arguments; second, Canva designs the presentation layout and brand formatting; third, Napkin.AI explains the process visually with instant diagrams; and finally, we reverse-expand the approved deck into a comprehensive written report.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-4/workflow.mp3`,
     },
     {
       id: "m4-tool-stack",
@@ -96,6 +98,7 @@ export const moduleFourRecap: LessonRecap = {
       },
       narration:
         "Look at the 3-tool matrix on the board. Do not expect one AI tool to do everything well. The proven training formula is: Copilot structures and thinks, Canva designs the presentation, and Napkin.AI explains the process visually.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-4/tool-stack.mp3`,
     },
     {
       id: "m4-prompt-deck",
@@ -113,6 +116,7 @@ export const moduleFourRecap: LessonRecap = {
       },
       narration:
         "Notice the power of the Executive Slide Architecture Prompt. Instead of bland topic bullets, it demands action-oriented headlines, strict word counts, suggested diagram formats, and speaker notes focused on return on investment. This gives you a complete, ready-to-build presentation blueprint in seconds.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-4/prompt-deck.mp3`,
     },
     {
       id: "m4-visual-storytelling",
@@ -121,7 +125,7 @@ export const moduleFourRecap: LessonRecap = {
       camera: "board",
       board: {
         kind: "processFlow",
-        heading: "The 7-Slide Executive Presentation Blueprint (Handbook p. 36 & 56)",
+        heading: "The 7-Slide Executive Presentation Blueprint",
         steps: [
           {
             stepNumber: 1,
@@ -163,7 +167,8 @@ export const moduleFourRecap: LessonRecap = {
         ],
       },
       narration:
-        "Bullet points create cognitive fatigue. Visual storytelling communicates complex relationships in seconds. On your screen is the 7-slide blueprint from page 36 of the handbook. Notice Slide 4: instead of text walls, use Napkin.AI to render a conceptual diagram or workflow chevron. And on Slide 6, always deliver quantified hours and ROI.",
+        "Bullet points create cognitive fatigue. Visual storytelling communicates complex relationships in seconds. On your screen is the 7-slide executive presentation blueprint. Notice Slide 4: instead of text walls, use Napkin.AI to render a conceptual diagram or workflow chevron. And on Slide 6, always deliver quantified hours and ROI.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-4/visual-storytelling.mp3`,
     },
     {
       id: "m4-report-generation",
@@ -177,6 +182,7 @@ export const moduleFourRecap: LessonRecap = {
       },
       narration:
         "Once your presentation deck is approved by stakeholders, creating the comprehensive report is fast and painless. You feed the final slide titles, key data points, and speaker notes back into Claude or Copilot with a prompt commanding it to write formal, paragraph-level executive commentary. The resulting report is tightly aligned with what leaders already approved.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-4/report-generation.mp3`,
     },
     {
       id: "m4-quality-control",
@@ -206,46 +212,12 @@ export const moduleFourRecap: LessonRecap = {
       },
       narration:
         "Always enforce three quality safeguards: The 1-Idea-per-slide rule keeps your audience engaged. Fact verification prevents embarrassing statistical discrepancies. And locked corporate brand templates ensure the final deck looks handcrafted by an elite design team.",
-    },
-    {
-      id: "m4-knowledge-check",
-      startSec: 520,
-      hudLabel: "8. Knowledge Check",
-      camera: "instructor",
-      board: {
-        kind: "takeaway",
-        heading: "Module 4 Knowledge Check",
-        text: "Why is the 'Presentation First, Then Report' workflow considered superior to traditional reporting?",
-      },
-      narration:
-        "Let us test our grasp of modern AI presentation workflows with a quick scenario check.",
-      knowledgeCheck: {
-        question:
-          "In the AI-accelerated presentation pipeline, why is starting with the presentation deck considered more effective than writing the full report first?",
-        options: [
-          {
-            id: "a",
-            label: "Because presentation slides allow employees to skip data verification entirely.",
-          },
-          {
-            id: "b",
-            label:
-              "Because distilling ideas into concise slides forces narrative clarity and secures stakeholder alignment early, allowing the full report to be expanded from an already approved structure.",
-          },
-          {
-            id: "c",
-            label: "Because AI tools cannot generate text longer than 200 words at a time.",
-          },
-        ],
-        correctId: "b",
-        confirmText:
-          "Correct! Designing the presentation first crystallizes the core narrative arc and gains executive consensus on key ideas before investing time expanding into a dense 30-page governance report.",
-      },
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-4/quality-control.mp3`,
     },
     {
       id: "m4-takeaways",
-      startSec: 570,
-      hudLabel: "9. Key Takeaways",
+      startSec: 520,
+      hudLabel: "8. Key Takeaways",
       camera: "wide",
       board: {
         kind: "takeaway",
@@ -253,7 +225,22 @@ export const moduleFourRecap: LessonRecap = {
         text: "1. Build the presentation first to establish executive clarity.\n2. Leverage the 3-tool synergy: Copilot for thinking, Napkin for visuals, Canva for layout.\n3. Replace bullet points with process diagrams and chevrons.\n4. Reverse-expand the approved deck outline to write comprehensive reports.\n5. Enforce corporate brand tokens and verify all numerical metrics.",
       },
       narration:
-        "To summarize Module 4: You now possess a modern, highly efficient workflow for enterprise storytelling. By combining structured prompting, automated diagramming, and reverse-report expansion, your team can produce boardroom-ready presentations in a fraction of the time. Next, in Module 5, we tackle the critical disciplines of AI ethics, privacy, and security at work.",
+        "To summarize Module 4: You now possess a modern, highly efficient workflow for enterprise storytelling. By combining structured prompting, automated diagramming, and reverse-report expansion, your team can produce boardroom-ready presentations in a fraction of the time. Proceed to the knowledge check and confidence self-report.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-4/takeaways.mp3`,
+    },
+    {
+      id: "m4-assessment",
+      startSec: 575,
+      hudLabel: "9. Knowledge Check (Quiz & Report)",
+      camera: "instructor",
+      board: {
+        kind: "takeaway",
+        heading: "Module 4 Knowledge Check & Self-Report",
+        text: "Complete the 5-question knowledge check and 4-item confidence self-report to complete Module 4.",
+      },
+      narration:
+        "Now, let us complete the five-question knowledge check and confidence self-report for Module 4.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-4/assessment.mp3`,
     },
   ],
 };

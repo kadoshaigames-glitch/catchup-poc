@@ -23,12 +23,15 @@ export interface EnvironmentThemeConfig {
   id: ModuleThemeId;
   name: string;
   themeTitle: string;
+  moduleCode: string;
+  badgeTag: string;
+
   // Scene clear & fog
   clearColor: Color4;
   fogColor: Color3;
   fogDensity: number;
 
-  // Lighting
+  // Lighting (Calibrated for Awang separation & crisp corporate drama)
   hemiDiffuse: Color3;
   hemiGround: Color3;
   hemiIntensity: number;
@@ -36,10 +39,11 @@ export interface EnvironmentThemeConfig {
   keyIntensity: number;
   rimDiffuse: Color3;
   rimIntensity: number;
+  fillIntensity: number;
   accentColor: Color3;
   accentIntensity: number;
 
-  // Materials
+  // Architectural Materials
   floorColor: Color3;
   floorSpecular: Color3;
   floorRoughness: number;
@@ -48,17 +52,22 @@ export interface EnvironmentThemeConfig {
   trimColor: Color3;
   plinthColor: Color3;
   tableColor: Color3;
+
+  // Saturated Neon Accents & Holograms
   accentPrimary: Color3;
   accentPrimaryEmissive: Color3;
   accentSecondary: Color3;
   accentSecondaryEmissive: Color3;
+  hologramColor: Color3;
+  boardBezelColor: Color3;
+  floorRunwayColor: Color3;
 
-  // Clerestory panoramic vista gradient
+  // Panoramic Clerestory Vista & Skyline
   skyTopColor: string;
   skyMidColor: string;
   skyHorizonColor: string;
 
-  // Particles
+  // Atmospheric Particles
   particleColor1: Color4;
   particleColor2: Color4;
   particleRate: number;
@@ -68,271 +77,319 @@ export interface EnvironmentThemeConfig {
 export const MODULE_ENVIRONMENTS: Record<ModuleThemeId, EnvironmentThemeConfig> = {
   // =========================================================================
   // MODULE 1 — AI BASICS: "Intelligent Learning Atrium"
-  // Bright, luminous, elegant discovery atmosphere with blue + warm gold accents
+  // Bright, luminous, aspirational discovery atrium with electric cyan + champagne gold
   // =========================================================================
   "module-1": {
     id: "module-1",
-    name: "AI Basics",
+    name: "AI Basics & Prompting",
     themeTitle: "Intelligent Learning Atrium",
-    clearColor: new Color4(0.18, 0.22, 0.28, 1.0),
-    fogColor: new Color3(0.20, 0.24, 0.30),
-    fogDensity: 0.008,
+    moduleCode: "TTDA-M1",
+    badgeTag: "PROMPT ENGINEERING // FOUNDATIONS",
 
-    hemiDiffuse: new Color3(0.72, 0.80, 0.92),
-    hemiGround: new Color3(0.32, 0.30, 0.28),
-    hemiIntensity: 0.78,
-    keyDiffuse: new Color3(1.0, 0.95, 0.88),
-    keyIntensity: 0.95,
-    rimDiffuse: new Color3(0.65, 0.78, 0.95),
-    rimIntensity: 0.50,
-    accentColor: new Color3(1.0, 0.85, 0.55),
-    accentIntensity: 1.4,
+    clearColor: new Color4(0.07, 0.09, 0.12, 1.0),
+    fogColor: new Color3(0.08, 0.10, 0.14),
+    fogDensity: 0.003,
 
-    floorColor: new Color3(0.32, 0.36, 0.42),
-    floorSpecular: new Color3(0.18, 0.20, 0.24),
-    floorRoughness: 0.25,
-    wallColor: new Color3(0.48, 0.52, 0.58),
-    wallSpecular: new Color3(0.15, 0.15, 0.18),
-    trimColor: new Color3(0.24, 0.27, 0.32),
-    plinthColor: new Color3(0.22, 0.25, 0.30),
-    tableColor: new Color3(0.28, 0.26, 0.24),
-    accentPrimary: new Color3(0.92, 0.76, 0.38),
-    accentPrimaryEmissive: new Color3(0.65, 0.50, 0.20),
-    accentSecondary: new Color3(0.35, 0.65, 0.95),
-    accentSecondaryEmissive: new Color3(0.25, 0.45, 0.75),
+    hemiDiffuse: new Color3(0.68, 0.74, 0.85),
+    hemiGround: new Color3(0.12, 0.13, 0.16),
+    hemiIntensity: 0.50,
+    keyDiffuse: new Color3(1.0, 0.97, 0.92),
+    keyIntensity: 1.30,
+    rimDiffuse: new Color3(0.0, 0.92, 1.0), // Electric cyan rim carving Awang
+    rimIntensity: 1.05,
+    fillIntensity: 0.30,
+    accentColor: new Color3(0.0, 0.92, 1.0),
+    accentIntensity: 2.1,
 
-    skyTopColor: "#254e7b",
-    skyMidColor: "#5a8bbd",
-    skyHorizonColor: "#ffd79e",
+    floorColor: new Color3(0.08, 0.10, 0.13),
+    floorSpecular: new Color3(0.38, 0.44, 0.52),
+    floorRoughness: 0.06,
+    wallColor: new Color3(0.13, 0.16, 0.20),
+    wallSpecular: new Color3(0.18, 0.20, 0.24),
+    trimColor: new Color3(0.16, 0.19, 0.24),
+    plinthColor: new Color3(0.10, 0.12, 0.16),
+    tableColor: new Color3(0.12, 0.14, 0.18),
 
-    particleColor1: new Color4(1.0, 0.90, 0.65, 0.75),
-    particleColor2: new Color4(0.80, 0.68, 0.40, 0.40),
-    particleRate: 20,
-    particleSpeed: 0.008,
+    accentPrimary: new Color3(0.0, 0.92, 1.0), // Electric cyan
+    accentPrimaryEmissive: new Color3(0.0, 0.90, 1.0),
+    accentSecondary: new Color3(1.0, 0.80, 0.28), // Champagne gold
+    accentSecondaryEmissive: new Color3(1.0, 0.76, 0.22),
+    hologramColor: new Color3(0.0, 0.94, 1.0),
+    boardBezelColor: new Color3(0.0, 0.90, 1.0),
+    floorRunwayColor: new Color3(0.0, 0.90, 1.0),
+
+    skyTopColor: "#0b192c",
+    skyMidColor: "#1d3f66",
+    skyHorizonColor: "#f3c26b",
+
+    particleColor1: new Color4(0.0, 0.92, 1.0, 0.85),
+    particleColor2: new Color4(1.0, 0.82, 0.30, 0.55),
+    particleRate: 28,
+    particleSpeed: 0.009,
   },
 
   // =========================================================================
-  // MODULE 2 — SMART COMPARISON: "Comparison & Analysis Studio"
-  // Balanced architectural symmetry, dual-panel visual language, cyan + amber
+  // MODULE 2 — SMART COMPARISON: "Comparison & Variance Analytics Studio"
+  // Balanced architectural symmetry, dual-channel cyan + amber analytical studio
   // =========================================================================
   "module-2": {
     id: "module-2",
     name: "Smart Comparison",
-    themeTitle: "Comparison & Analysis Studio",
-    clearColor: new Color4(0.11, 0.14, 0.19, 1.0),
-    fogColor: new Color3(0.13, 0.16, 0.22),
-    fogDensity: 0.010,
+    themeTitle: "Comparison & Variance Analytics Studio",
+    moduleCode: "TTDA-M2",
+    badgeTag: "MULTI-DOC VARIANCE AUDITOR",
 
-    hemiDiffuse: new Color3(0.55, 0.68, 0.82),
-    hemiGround: new Color3(0.18, 0.18, 0.20),
-    hemiIntensity: 0.72,
-    keyDiffuse: new Color3(0.95, 0.96, 1.0),
-    keyIntensity: 0.98,
-    rimDiffuse: new Color3(0.95, 0.80, 0.55),
-    rimIntensity: 0.55,
-    accentColor: new Color3(0.35, 0.85, 0.95),
-    accentIntensity: 1.4,
+    clearColor: new Color4(0.06, 0.08, 0.11, 1.0),
+    fogColor: new Color3(0.07, 0.09, 0.13),
+    fogDensity: 0.003,
 
-    floorColor: new Color3(0.20, 0.24, 0.30),
-    floorSpecular: new Color3(0.16, 0.18, 0.22),
-    floorRoughness: 0.25,
-    wallColor: new Color3(0.32, 0.36, 0.44),
-    wallSpecular: new Color3(0.18, 0.18, 0.22),
-    trimColor: new Color3(0.16, 0.20, 0.26),
-    plinthColor: new Color3(0.18, 0.22, 0.28),
-    tableColor: new Color3(0.22, 0.24, 0.28),
-    accentPrimary: new Color3(0.15, 0.78, 0.94),
-    accentPrimaryEmissive: new Color3(0.20, 0.68, 0.85),
-    accentSecondary: new Color3(0.95, 0.75, 0.35),
-    accentSecondaryEmissive: new Color3(0.85, 0.60, 0.20),
+    hemiDiffuse: new Color3(0.65, 0.72, 0.82),
+    hemiGround: new Color3(0.11, 0.12, 0.15),
+    hemiIntensity: 0.48,
+    keyDiffuse: new Color3(0.98, 0.98, 1.0),
+    keyIntensity: 1.30,
+    rimDiffuse: new Color3(1.0, 0.68, 0.16), // Radiant comparative amber rim
+    rimIntensity: 1.05,
+    fillIntensity: 0.28,
+    accentColor: new Color3(0.08, 0.85, 0.98),
+    accentIntensity: 2.1,
 
-    skyTopColor: "#102a43",
-    skyMidColor: "#243b53",
-    skyHorizonColor: "#486581",
+    floorColor: new Color3(0.07, 0.09, 0.12),
+    floorSpecular: new Color3(0.36, 0.42, 0.50),
+    floorRoughness: 0.06,
+    wallColor: new Color3(0.12, 0.15, 0.19),
+    wallSpecular: new Color3(0.18, 0.20, 0.24),
+    trimColor: new Color3(0.15, 0.18, 0.23),
+    plinthColor: new Color3(0.10, 0.12, 0.16),
+    tableColor: new Color3(0.12, 0.14, 0.18),
 
-    particleColor1: new Color4(0.40, 0.85, 1.0, 0.70),
-    particleColor2: new Color4(1.0, 0.80, 0.40, 0.45),
-    particleRate: 22,
+    accentPrimary: new Color3(0.05, 0.88, 1.0), // Analytical laser cyan
+    accentPrimaryEmissive: new Color3(0.05, 0.85, 0.98),
+    accentSecondary: new Color3(1.0, 0.65, 0.14), // Comparative amber
+    accentSecondaryEmissive: new Color3(0.98, 0.60, 0.10),
+    hologramColor: new Color3(0.08, 0.88, 1.0),
+    boardBezelColor: new Color3(1.0, 0.68, 0.16),
+    floorRunwayColor: new Color3(0.05, 0.88, 1.0),
+
+    skyTopColor: "#071322",
+    skyMidColor: "#152a45",
+    skyHorizonColor: "#4f729b",
+
+    particleColor1: new Color4(0.08, 0.88, 1.0, 0.80),
+    particleColor2: new Color4(1.0, 0.68, 0.16, 0.60),
+    particleRate: 28,
     particleSpeed: 0.009,
   },
 
   // =========================================================================
-  // MODULE 3 — AI AGENTS: "AI Systems Lab"
-  // Interconnected network conduits, system architecture, emerald + electric cyan
+  // MODULE 3 — AI AGENTS: "Neural Systems & Agent Architecture Lab"
+  // Deep cybernetic enterprise lab, server telemetry fins, emerald + electric sapphire
   // =========================================================================
   "module-3": {
     id: "module-3",
-    name: "AI Agents",
-    themeTitle: "AI Systems Lab",
-    clearColor: new Color4(0.08, 0.12, 0.16, 1.0),
-    fogColor: new Color3(0.10, 0.14, 0.18),
-    fogDensity: 0.012,
+    name: "Build AI Agents",
+    themeTitle: "Neural Systems & Agent Architecture Lab",
+    moduleCode: "TTDA-M3",
+    badgeTag: "AUTONOMOUS SYSTEM ORCHESTRATION",
 
-    hemiDiffuse: new Color3(0.45, 0.65, 0.70),
-    hemiGround: new Color3(0.12, 0.16, 0.16),
-    hemiIntensity: 0.68,
-    keyDiffuse: new Color3(0.92, 0.98, 0.95),
-    keyIntensity: 0.95,
-    rimDiffuse: new Color3(0.20, 0.90, 0.75),
-    rimIntensity: 0.60,
-    accentColor: new Color3(0.10, 0.85, 0.65),
-    accentIntensity: 1.4,
+    clearColor: new Color4(0.05, 0.09, 0.09, 1.0),
+    fogColor: new Color3(0.06, 0.10, 0.11),
+    fogDensity: 0.003,
 
-    floorColor: new Color3(0.15, 0.18, 0.22),
-    floorSpecular: new Color3(0.14, 0.18, 0.20),
-    floorRoughness: 0.25,
-    wallColor: new Color3(0.25, 0.29, 0.34),
-    wallSpecular: new Color3(0.16, 0.18, 0.20),
-    trimColor: new Color3(0.12, 0.15, 0.18),
-    plinthColor: new Color3(0.15, 0.19, 0.22),
-    tableColor: new Color3(0.16, 0.20, 0.23),
-    accentPrimary: new Color3(0.08, 0.82, 0.58),
-    accentPrimaryEmissive: new Color3(0.12, 0.75, 0.52),
-    accentSecondary: new Color3(0.10, 0.70, 0.90),
-    accentSecondaryEmissive: new Color3(0.15, 0.60, 0.85),
+    hemiDiffuse: new Color3(0.55, 0.74, 0.72),
+    hemiGround: new Color3(0.09, 0.13, 0.13),
+    hemiIntensity: 0.46,
+    keyDiffuse: new Color3(0.96, 1.0, 0.98),
+    keyIntensity: 1.30,
+    rimDiffuse: new Color3(0.05, 0.96, 0.62), // Cyber emerald rim
+    rimIntensity: 1.10,
+    fillIntensity: 0.28,
+    accentColor: new Color3(0.05, 0.96, 0.62),
+    accentIntensity: 2.2,
 
-    skyTopColor: "#061a1e",
-    skyMidColor: "#0f333a",
-    skyHorizonColor: "#1d5861",
+    floorColor: new Color3(0.06, 0.09, 0.10),
+    floorSpecular: new Color3(0.32, 0.46, 0.44),
+    floorRoughness: 0.06,
+    wallColor: new Color3(0.11, 0.15, 0.16),
+    wallSpecular: new Color3(0.16, 0.22, 0.22),
+    trimColor: new Color3(0.13, 0.18, 0.19),
+    plinthColor: new Color3(0.09, 0.12, 0.13),
+    tableColor: new Color3(0.10, 0.14, 0.15),
 
-    particleColor1: new Color4(0.20, 0.90, 0.70, 0.75),
-    particleColor2: new Color4(0.10, 0.75, 0.95, 0.45),
-    particleRate: 24,
+    accentPrimary: new Color3(0.05, 0.96, 0.60), // Cyber emerald mint
+    accentPrimaryEmissive: new Color3(0.05, 0.92, 0.58),
+    accentSecondary: new Color3(0.12, 0.68, 1.0), // System electric sapphire
+    accentSecondaryEmissive: new Color3(0.10, 0.64, 0.98),
+    hologramColor: new Color3(0.05, 0.96, 0.62),
+    boardBezelColor: new Color3(0.05, 0.96, 0.60),
+    floorRunwayColor: new Color3(0.12, 0.68, 1.0),
+
+    skyTopColor: "#021316",
+    skyMidColor: "#0a2b30",
+    skyHorizonColor: "#1d6264",
+
+    particleColor1: new Color4(0.05, 0.96, 0.62, 0.85),
+    particleColor2: new Color4(0.12, 0.68, 1.0, 0.55),
+    particleRate: 30,
     particleSpeed: 0.010,
   },
 
   // =========================================================================
-  // MODULE 4 — PRESENTATION & REPORT: "Executive Presentation Studio"
-  // Refined stage space, dark walnut acoustic baffles, warm champagne lighting
+  // MODULE 4 — PRESENTATION & REPORT: "Executive Presentation & Media Studio"
+  // Refined media stage, rich dark acoustic baffles, warm champagne bronze lighting
   // =========================================================================
   "module-4": {
     id: "module-4",
     name: "Presentation & Report",
-    themeTitle: "Executive Presentation Studio",
-    clearColor: new Color4(0.11, 0.10, 0.13, 1.0),
-    fogColor: new Color3(0.14, 0.12, 0.15),
-    fogDensity: 0.010,
+    themeTitle: "Executive Presentation & Media Studio",
+    moduleCode: "TTDA-M4",
+    badgeTag: "VISUAL STORYTELLING & SYNTHESIS",
 
-    hemiDiffuse: new Color3(0.70, 0.65, 0.60),
-    hemiGround: new Color3(0.22, 0.16, 0.12),
-    hemiIntensity: 0.75,
-    keyDiffuse: new Color3(1.0, 0.92, 0.80),
-    keyIntensity: 1.05,
-    rimDiffuse: new Color3(0.95, 0.82, 0.65),
-    rimIntensity: 0.50,
-    accentColor: new Color3(1.0, 0.82, 0.55),
-    accentIntensity: 1.4,
+    clearColor: new Color4(0.08, 0.06, 0.08, 1.0),
+    fogColor: new Color3(0.09, 0.07, 0.09),
+    fogDensity: 0.003,
 
-    floorColor: new Color3(0.20, 0.18, 0.20),
-    floorSpecular: new Color3(0.18, 0.16, 0.15),
-    floorRoughness: 0.25,
-    wallColor: new Color3(0.36, 0.30, 0.26),
-    wallSpecular: new Color3(0.16, 0.14, 0.12),
-    trimColor: new Color3(0.22, 0.15, 0.10),
-    plinthColor: new Color3(0.24, 0.16, 0.12),
-    tableColor: new Color3(0.28, 0.18, 0.13),
-    accentPrimary: new Color3(0.88, 0.72, 0.45),
-    accentPrimaryEmissive: new Color3(0.65, 0.50, 0.25),
-    accentSecondary: new Color3(0.95, 0.85, 0.68),
-    accentSecondaryEmissive: new Color3(0.70, 0.58, 0.38),
+    hemiDiffuse: new Color3(0.70, 0.64, 0.62),
+    hemiGround: new Color3(0.14, 0.10, 0.10),
+    hemiIntensity: 0.50,
+    keyDiffuse: new Color3(1.0, 0.95, 0.88),
+    keyIntensity: 1.32,
+    rimDiffuse: new Color3(1.0, 0.84, 0.44), // Warm champagne gold rim
+    rimIntensity: 1.05,
+    fillIntensity: 0.30,
+    accentColor: new Color3(1.0, 0.82, 0.38),
+    accentIntensity: 2.1,
 
-    skyTopColor: "#1a1218",
-    skyMidColor: "#36222b",
-    skyHorizonColor: "#6b473b",
+    floorColor: new Color3(0.08, 0.07, 0.08),
+    floorSpecular: new Color3(0.42, 0.38, 0.40),
+    floorRoughness: 0.06,
+    wallColor: new Color3(0.14, 0.12, 0.14),
+    wallSpecular: new Color3(0.20, 0.18, 0.18),
+    trimColor: new Color3(0.18, 0.14, 0.14),
+    plinthColor: new Color3(0.11, 0.09, 0.10),
+    tableColor: new Color3(0.14, 0.11, 0.12),
 
-    particleColor1: new Color4(1.0, 0.90, 0.72, 0.70),
-    particleColor2: new Color4(0.85, 0.70, 0.45, 0.40),
-    particleRate: 18,
-    particleSpeed: 0.007,
-  },
+    accentPrimary: new Color3(1.0, 0.82, 0.38), // Radiant champagne bronze
+    accentPrimaryEmissive: new Color3(0.98, 0.78, 0.32),
+    accentSecondary: new Color3(0.90, 0.32, 0.98), // Amethyst media magenta
+    accentSecondaryEmissive: new Color3(0.85, 0.26, 0.92),
+    hologramColor: new Color3(1.0, 0.84, 0.42),
+    boardBezelColor: new Color3(1.0, 0.82, 0.38),
+    floorRunwayColor: new Color3(0.90, 0.32, 0.98),
 
-  // =========================================================================
-  // MODULE 5 — ETHICS, PRIVACY & SECURITY: "Trust & Governance Chamber"
-  // Calm, trustworthy rotunda, geometric shield motifs, regal cobalt + gold
-  // =========================================================================
-  "module-5": {
-    id: "module-5",
-    name: "Ethics & Governance",
-    themeTitle: "Trust & Governance Chamber",
-    clearColor: new Color4(0.09, 0.12, 0.18, 1.0),
-    fogColor: new Color3(0.11, 0.14, 0.20),
-    fogDensity: 0.010,
+    skyTopColor: "#170c17",
+    skyMidColor: "#33182b",
+    skyHorizonColor: "#7a4a39",
 
-    hemiDiffuse: new Color3(0.58, 0.68, 0.85),
-    hemiGround: new Color3(0.16, 0.16, 0.20),
-    hemiIntensity: 0.72,
-    keyDiffuse: new Color3(0.95, 0.96, 1.0),
-    keyIntensity: 0.98,
-    rimDiffuse: new Color3(0.40, 0.70, 1.0),
-    rimIntensity: 0.55,
-    accentColor: new Color3(0.25, 0.60, 0.95),
-    accentIntensity: 1.4,
-
-    floorColor: new Color3(0.18, 0.22, 0.28),
-    floorSpecular: new Color3(0.16, 0.18, 0.22),
-    floorRoughness: 0.25,
-    wallColor: new Color3(0.38, 0.42, 0.50),
-    wallSpecular: new Color3(0.18, 0.20, 0.24),
-    trimColor: new Color3(0.15, 0.18, 0.24),
-    plinthColor: new Color3(0.18, 0.22, 0.28),
-    tableColor: new Color3(0.20, 0.22, 0.26),
-    accentPrimary: new Color3(0.25, 0.62, 0.96),
-    accentPrimaryEmissive: new Color3(0.20, 0.52, 0.88),
-    accentSecondary: new Color3(0.92, 0.75, 0.38),
-    accentSecondaryEmissive: new Color3(0.72, 0.55, 0.22),
-
-    skyTopColor: "#0b1526",
-    skyMidColor: "#172d4d",
-    skyHorizonColor: "#33557e",
-
-    particleColor1: new Color4(0.35, 0.70, 1.0, 0.75),
-    particleColor2: new Color4(0.95, 0.80, 0.45, 0.45),
-    particleRate: 20,
+    particleColor1: new Color4(1.0, 0.85, 0.42, 0.80),
+    particleColor2: new Color4(0.90, 0.32, 0.98, 0.50),
+    particleRate: 26,
     particleSpeed: 0.008,
   },
 
   // =========================================================================
-  // MODULE 6 — PUTTING AI INTO PRACTICE: "AI Innovation Workspace"
-  // Bright, optimistic modern campus, blonde oak slats, dynamic momentum
+  // MODULE 5 — ETHICS, PRIVACY & SECURITY: "Trust, Ethics & AI Governance Chamber"
+  // Dignified security rotunda, hexagonal pillars, regal cobalt + platinum gold
+  // =========================================================================
+  "module-5": {
+    id: "module-5",
+    name: "Ethics, Privacy & Security",
+    themeTitle: "Trust, Ethics & AI Governance Chamber",
+    moduleCode: "TTDA-M5",
+    badgeTag: "COMPLIANCE & GOVERNANCE AUTHORITY",
+
+    clearColor: new Color4(0.06, 0.08, 0.12, 1.0),
+    fogColor: new Color3(0.07, 0.09, 0.13),
+    fogDensity: 0.003,
+
+    hemiDiffuse: new Color3(0.64, 0.72, 0.85),
+    hemiGround: new Color3(0.10, 0.12, 0.16),
+    hemiIntensity: 0.48,
+    keyDiffuse: new Color3(0.96, 0.98, 1.0),
+    keyIntensity: 1.30,
+    rimDiffuse: new Color3(0.20, 0.65, 1.0), // Deep regal cobalt rim
+    rimIntensity: 1.10,
+    fillIntensity: 0.28,
+    accentColor: new Color3(0.20, 0.65, 1.0),
+    accentIntensity: 2.1,
+
+    floorColor: new Color3(0.07, 0.09, 0.13),
+    floorSpecular: new Color3(0.36, 0.42, 0.54),
+    floorRoughness: 0.06,
+    wallColor: new Color3(0.12, 0.15, 0.20),
+    wallSpecular: new Color3(0.18, 0.20, 0.26),
+    trimColor: new Color3(0.15, 0.18, 0.24),
+    plinthColor: new Color3(0.10, 0.12, 0.16),
+    tableColor: new Color3(0.12, 0.14, 0.19),
+
+    accentPrimary: new Color3(0.18, 0.65, 1.0), // Regal security cobalt
+    accentPrimaryEmissive: new Color3(0.18, 0.60, 0.98),
+    accentSecondary: new Color3(1.0, 0.88, 0.42), // Integrity platinum gold
+    accentSecondaryEmissive: new Color3(0.96, 0.82, 0.35),
+    hologramColor: new Color3(0.24, 0.70, 1.0),
+    boardBezelColor: new Color3(0.18, 0.65, 1.0),
+    floorRunwayColor: new Color3(1.0, 0.88, 0.42),
+
+    skyTopColor: "#050d1a",
+    skyMidColor: "#102344",
+    skyHorizonColor: "#385e8e",
+
+    particleColor1: new Color4(0.20, 0.68, 1.0, 0.85),
+    particleColor2: new Color4(1.0, 0.88, 0.42, 0.55),
+    particleRate: 28,
+    particleSpeed: 0.009,
+  },
+
+  // =========================================================================
+  // MODULE 6 — PUTTING AI INTO PRACTICE: "Workplace AI Innovation Accelerator"
+  // High-energy transformation hub, angled momentum fins, kinetic orange + teal
   // =========================================================================
   "module-6": {
     id: "module-6",
-    name: "AI in Practice",
-    themeTitle: "AI Innovation Workspace",
-    clearColor: new Color4(0.18, 0.20, 0.23, 1.0),
-    fogColor: new Color3(0.20, 0.22, 0.25),
-    fogDensity: 0.008,
+    name: "Putting AI into Practice",
+    themeTitle: "Workplace AI Innovation Accelerator",
+    moduleCode: "TTDA-M6",
+    badgeTag: "30-DAY OPERATIONAL TRANSFORMATION",
 
-    hemiDiffuse: new Color3(0.82, 0.82, 0.86),
-    hemiGround: new Color3(0.35, 0.30, 0.25),
-    hemiIntensity: 0.78,
-    keyDiffuse: new Color3(1.0, 0.95, 0.86),
-    keyIntensity: 0.98,
-    rimDiffuse: new Color3(0.98, 0.82, 0.60),
-    rimIntensity: 0.52,
-    accentColor: new Color3(0.98, 0.75, 0.42),
-    accentIntensity: 1.4,
+    clearColor: new Color4(0.08, 0.08, 0.09, 1.0),
+    fogColor: new Color3(0.09, 0.09, 0.10),
+    fogDensity: 0.003,
 
-    floorColor: new Color3(0.34, 0.34, 0.36),
-    floorSpecular: new Color3(0.16, 0.15, 0.14),
-    floorRoughness: 0.25,
-    wallColor: new Color3(0.46, 0.46, 0.48),
-    wallSpecular: new Color3(0.15, 0.14, 0.13),
-    trimColor: new Color3(0.38, 0.28, 0.20),
-    plinthColor: new Color3(0.30, 0.22, 0.16),
-    tableColor: new Color3(0.34, 0.25, 0.18),
-    accentPrimary: new Color3(0.95, 0.65, 0.28),
-    accentPrimaryEmissive: new Color3(0.75, 0.45, 0.18),
-    accentSecondary: new Color3(0.92, 0.80, 0.42),
-    accentSecondaryEmissive: new Color3(0.70, 0.58, 0.24),
+    hemiDiffuse: new Color3(0.72, 0.70, 0.68),
+    hemiGround: new Color3(0.15, 0.13, 0.12),
+    hemiIntensity: 0.50,
+    keyDiffuse: new Color3(1.0, 0.96, 0.92),
+    keyIntensity: 1.32,
+    rimDiffuse: new Color3(1.0, 0.50, 0.10), // High-energy kinetic orange rim
+    rimIntensity: 1.10,
+    fillIntensity: 0.30,
+    accentColor: new Color3(1.0, 0.48, 0.10),
+    accentIntensity: 2.2,
 
-    skyTopColor: "#2a5584",
-    skyMidColor: "#5987b5",
-    skyHorizonColor: "#ffd69e",
+    floorColor: new Color3(0.08, 0.08, 0.10),
+    floorSpecular: new Color3(0.42, 0.40, 0.44),
+    floorRoughness: 0.06,
+    wallColor: new Color3(0.14, 0.14, 0.16),
+    wallSpecular: new Color3(0.18, 0.18, 0.20),
+    trimColor: new Color3(0.18, 0.15, 0.14),
+    plinthColor: new Color3(0.11, 0.10, 0.10),
+    tableColor: new Color3(0.13, 0.12, 0.12),
 
-    particleColor1: new Color4(1.0, 0.85, 0.55, 0.75),
-    particleColor2: new Color4(0.98, 0.65, 0.35, 0.45),
-    particleRate: 22,
-    particleSpeed: 0.009,
+    accentPrimary: new Color3(1.0, 0.46, 0.08), // Kinetic neon orange
+    accentPrimaryEmissive: new Color3(0.98, 0.40, 0.06),
+    accentSecondary: new Color3(0.06, 0.88, 0.80), // Execution electric teal
+    accentSecondaryEmissive: new Color3(0.06, 0.84, 0.74),
+    hologramColor: new Color3(1.0, 0.50, 0.12),
+    boardBezelColor: new Color3(1.0, 0.46, 0.08),
+    floorRunwayColor: new Color3(0.06, 0.88, 0.80),
+
+    skyTopColor: "#09131e",
+    skyMidColor: "#173452",
+    skyHorizonColor: "#ff8238",
+
+    particleColor1: new Color4(1.0, 0.48, 0.10, 0.85),
+    particleColor2: new Color4(0.06, 0.88, 0.80, 0.55),
+    particleRate: 30,
+    particleSpeed: 0.010,
   },
 };

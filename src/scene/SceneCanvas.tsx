@@ -12,6 +12,10 @@ type Props = {
   beatStartSec?: number;
   isPlaying?: boolean;
   questionOpen?: boolean;
+  boardZoom?: number;
+  boardPanX?: number;
+  boardPanY?: number;
+  isBoardMaximized?: boolean;
 };
 
 export function SceneCanvas({
@@ -24,6 +28,10 @@ export function SceneCanvas({
   beatStartSec,
   isPlaying,
   questionOpen,
+  boardZoom,
+  boardPanX,
+  boardPanY,
+  isBoardMaximized,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<ClassroomScene | null>(null);
@@ -40,6 +48,9 @@ export function SceneCanvas({
       (window as unknown as { __classroomScene?: ClassroomScene; __awangController?: unknown }).__awangController = classroom.instructor;
     }
     classroom.start();
+    requestAnimationFrame(() => {
+      classroom.resize();
+    });
     return () => {
       if (typeof window !== "undefined") {
         delete (window as unknown as { __classroomScene?: ClassroomScene }).__classroomScene;
@@ -61,6 +72,10 @@ export function SceneCanvas({
       beatStartSec,
       isPlaying,
       questionOpen,
+      boardZoom,
+      boardPanX,
+      boardPanY,
+      isBoardMaximized,
     });
   }, [
     camera,
@@ -72,6 +87,10 @@ export function SceneCanvas({
     beatStartSec,
     isPlaying,
     questionOpen,
+    boardZoom,
+    boardPanX,
+    boardPanY,
+    isBoardMaximized,
   ]);
 
   return (

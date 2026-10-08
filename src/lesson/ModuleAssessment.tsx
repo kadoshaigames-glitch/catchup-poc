@@ -4,10 +4,18 @@ import {
   type ModuleQuizData,
   type QuizQuestion,
 } from "../content/quizData";
+import {
+  recordConfidenceScore,
+  recordQuizScore,
+} from "../services/learnerProgressStore";
 
 type Props = {
   moduleId: string;
-  onComplete: () => void;
+  onComplete: (results?: {
+    quizScore: number;
+    quizTotal: number;
+    confidenceAverage: number;
+  }) => void;
   onReviewLesson?: () => void;
 };
 
@@ -85,6 +93,8 @@ export function ModuleAssessment({ moduleId, onComplete, onReviewLesson }: Props
       setSelectedOptionId(null);
       setIsAnswerSubmitted(false);
     } else {
+      const score = Object.values(answers).filter((a) => a.isCorrect).length;
+      recordQuizScore(moduleId, score, quizData.questions.length);
       setStep("self-report");
     }
   };
@@ -99,6 +109,10 @@ export function ModuleAssessment({ moduleId, onComplete, onReviewLesson }: Props
 
   // Transition from self-report to results
   const handleFinishSelfReport = () => {
+    const values = Object.values(ratings);
+    const sum = values.reduce((acc, curr) => acc + curr, 0);
+    const avg = values.length ? Math.round((sum / values.length) * 10) / 10 : 4;
+    recordConfidenceScore(moduleId, avg);
     setStep("results");
   };
 
@@ -342,6 +356,17 @@ export function ModuleAssessment({ moduleId, onComplete, onReviewLesson }: Props
                   <span className="score-number">
                     {correctCount} <span className="score-denom">/ {totalQuestions}</span>
                   </span>
+                  <span
+                    className="score-pct"
+                    style={{
+                      fontSize: "0.82rem",
+                      color: "var(--accent-gold)",
+                      fontWeight: 600,
+                      marginTop: "2px",
+                    }}
+                  >
+                    {Math.round((correctCount / totalQuestions) * 100)}%
+                  </span>
                 </div>
                 <div className="score-card">
                   <span className="score-label">Confidence</span>
@@ -412,7 +437,13 @@ export function ModuleAssessment({ moduleId, onComplete, onReviewLesson }: Props
               <button
                 type="button"
                 className="btn-primary completion-btn"
-                onClick={onComplete}
+                onClick={() =>
+                  onComplete({
+                    quizScore: correctCount,
+                    quizTotal: totalQuestions,
+                    confidenceAverage: averageConfidence,
+                  })
+                }
               >
                 Complete Module
               </button>

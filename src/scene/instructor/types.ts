@@ -20,6 +20,15 @@ export type AwangPose =
   | "simpleGesture"
   | "listening";
 
+export type InstructorAnimState =
+  | "IDLE"
+  | "LISTENING"
+  | "PRESENTING"
+  | "POINTING"
+  | "GESTURING"
+  | "TURNING"
+  | "WALKING";
+
 export interface InstructorHandle {
   root: TransformNode;
   update: (elapsedSec: number) => void;
@@ -28,13 +37,14 @@ export interface InstructorHandle {
   // Optional methods provided by full character controllers (e.g. AwangController)
   readonly isLoaded?: boolean;
   readonly activeAnimationName?: string | null;
+  readonly animState?: InstructorAnimState;
   idle?: () => void;
   walk?: () => void;
   walkToStop?: (onComplete?: () => void) => void;
-  turn?: (targetAngleRad?: number) => void;
-  present?: (loop?: boolean) => void;
-  point?: (loop?: boolean) => void;
-  simpleGesture?: (loop?: boolean) => void;
+  turn?: (targetAngleRad?: number, onComplete?: () => void) => void;
+  present?: (loop?: boolean, onComplete?: () => void) => void;
+  point?: (loop?: boolean, onComplete?: () => void) => void;
+  simpleGesture?: (loop?: boolean, onComplete?: () => void) => void;
   listening?: (loop?: boolean) => void;
   walkTo?: (
     target: Vector3,
@@ -44,6 +54,8 @@ export interface InstructorHandle {
   ) => void;
   stopWalking?: () => void;
   teleport?: (position: Vector3, yaw?: number) => void;
+  setLookTarget?: (target: "board" | "learner" | "neutral") => void;
+  conversationalGesture?: (variant?: "quick" | "nod" | "palm", onComplete?: () => void) => void;
   playAnimation?: (
     name: AwangPose | AwangAnimationName | string,
     loop?: boolean,
@@ -60,11 +72,13 @@ export interface AwangController extends InstructorHandle {
   idle: () => void;
   walk: () => void;
   walkToStop: (onComplete?: () => void) => void;
-  turn: (targetAngleRad?: number) => void;
-  present: (loop?: boolean) => void;
-  point: (loop?: boolean) => void;
-  simpleGesture: (loop?: boolean) => void;
+  turn: (targetAngleRad?: number, onComplete?: () => void) => void;
+  present: (loop?: boolean, onComplete?: () => void) => void;
+  point: (loop?: boolean, onComplete?: () => void) => void;
+  simpleGesture: (loop?: boolean, onComplete?: () => void) => void;
   listening: (loop?: boolean) => void;
+  setLookTarget: (target: "board" | "learner" | "neutral") => void;
+  conversationalGesture: (variant?: "quick" | "nod" | "palm", onComplete?: () => void) => void;
 
   playAnimation: (
     name: AwangPose | AwangAnimationName | string,

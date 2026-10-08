@@ -1090,7 +1090,7 @@ export const QUIZ_DATA_BY_MODULE: Record<string, ModuleQuizData> = {
         id: "m6-q5",
         topicTag: "30-Day AI Habit Building",
         question:
-          "According to the Level 1 Handbook commitment plan, what is the key to building lasting workplace AI competence over 30 days?",
+          "In building lasting workplace AI competence over 30 days, what is the key daily practice?",
         options: [
           {
             id: "a",

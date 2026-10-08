@@ -10,7 +10,6 @@ function formatTime(sec: number): string {
 
 type Props = {
   lessonTitle: string;
-  prototypeNote: string;
   durationSec: number;
   time: number;
   playing: boolean;
@@ -34,7 +33,6 @@ const cameraLabels: { id: CameraShotId; label: string }[] = [
 
 export function LessonHud({
   lessonTitle,
-  prototypeNote,
   durationSec,
   time,
   playing,
@@ -146,7 +144,7 @@ export function LessonHud({
           ← Exit recap
         </button>
         <div className="hud-heading">
-          <p className="eyebrow">Lesson 1 · Level 1: AI Foundations & Literacy · Catchup Demo</p>
+          <p className="eyebrow">Lesson 1 · Level 1: AI Foundations & Literacy · Catchup</p>
           <h1>{lessonTitle}</h1>
         </div>
         <div className="hud-top-right">
@@ -157,7 +155,6 @@ export function LessonHud({
             <span className="hud-countdown-label">TIME REMAINING</span>
             <span className="hud-countdown-digits">{formattedRemaining}</span>
           </div>
-          <p className="hud-note">{prototypeNote}</p>
         </div>
       </header>
 

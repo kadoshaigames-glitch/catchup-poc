@@ -10,7 +10,7 @@ function beatAt(lesson: LessonRecap, time: number): LessonBeat {
   return applicable[applicable.length - 1] ?? lesson.beats[0];
 }
 
-export function useLessonPlayback(lesson: LessonRecap) {
+export function useLessonPlayback(lesson: LessonRecap, isAudioReady: boolean = true) {
   const [time, setTime] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [dismissedCheckBeatIds, setDismissedCheckBeatIds] = useState<Record<string, boolean>>({});
@@ -21,23 +21,26 @@ export function useLessonPlayback(lesson: LessonRecap) {
   const playingRef = useRef(playing);
   const timeRef = useRef(time);
   const dismissedChecksRef = useRef(dismissedCheckBeatIds);
+  const isAudioReadyRef = useRef(isAudioReady);
 
   playingRef.current = playing;
   timeRef.current = time;
   dismissedChecksRef.current = dismissedCheckBeatIds;
+  isAudioReadyRef.current = isAudioReady;
 
-  // Active check beat preserved for compatibility
+  // Active check beat: triggers interactive KnowledgeCheck modal when reached (only for prototype demo)
+  const isSampleLesson = lesson.id === "m1-l1" || lesson.moduleId === "module-1-demo";
   const activeCheckBeat = useMemo(() => {
+    if (!isSampleLesson) return undefined;
     return lesson.beats.find(
       (beat) =>
         Boolean(beat.knowledgeCheck) &&
         time >= beat.startSec - 0.001 &&
         !dismissedCheckBeatIds[beat.id],
     );
-  }, [lesson.beats, time, dismissedCheckBeatIds]);
+  }, [lesson.beats, time, dismissedCheckBeatIds, isSampleLesson]);
 
-  // Mid-lecture questionOpen is false so teaching is not interrupted
-  const questionOpen = false;
+  const questionOpen = Boolean(activeCheckBeat);
   const knowledgeCheck: KnowledgeCheck | undefined = activeCheckBeat?.knowledgeCheck;
 
   const activeBeat = beatAt(lesson, time);
@@ -48,15 +51,58 @@ export function useLessonPlayback(lesson: LessonRecap) {
     }
     playingRef.current = true;
     let frame = 0;
+    let timerId: number | ReturnType<typeof setInterval>;
     let last = performance.now();
-    const tick = (now: number) => {
+
+    const tick = () => {
       if (!playingRef.current) {
         return;
       }
-      const delta = Math.min(0.05, (now - last) / 1000);
-      last = now;
+      const now = performance.now();
 
-      let next = timeRef.current + delta;
+      // 1. Authoritative audio clock: prioritize hardware audio media or active narration
+      let audioGlobal: number | null = null;
+      if (typeof window !== "undefined") {
+        const ctrl = (window as any).__catchupAudio;
+        if (ctrl && typeof ctrl.getAuthoritativeGlobalTime === "function") {
+          audioGlobal = ctrl.getAuthoritativeGlobalTime();
+        }
+      }
+
+      let next: number;
+      if (audioGlobal !== null && typeof audioGlobal === "number" && !isNaN(audioGlobal)) {
+        next = audioGlobal;
+        last = now;
+      } else {
+        // Hold lesson timeline at 0.000 until initial audio has officially started
+        if (!isAudioReadyRef.current && timeRef.current === 0) {
+          last = now;
+          return;
+        }
+
+        const elapsed = (now - last) / 1000;
+        last = now;
+        // Wall-clock elapsed time (no arbitrary clamping that causes cumulative drift)
+        next = timeRef.current + Math.min(0.25, Math.max(0, elapsed));
+      }
+
+      // Check if an undismissed knowledge check beat has been reached (sample lesson only)
+      const checkBeat = isSampleLesson
+        ? lesson.beats.find(
+            (b) =>
+              Boolean(b.knowledgeCheck) &&
+              next >= b.startSec - 0.001 &&
+              !dismissedChecksRef.current[b.id],
+          )
+        : undefined;
+
+      if (checkBeat) {
+        timeRef.current = checkBeat.startSec;
+        setTime(checkBeat.startSec);
+        playingRef.current = false;
+        setPlaying(false);
+        return;
+      }
 
       if (next >= lesson.durationSec) {
         next = lesson.durationSec;
@@ -69,11 +115,34 @@ export function useLessonPlayback(lesson: LessonRecap) {
 
       timeRef.current = next;
       setTime(next);
-      frame = requestAnimationFrame(tick);
+      if (typeof window !== "undefined") {
+        (window as any).__playbackTick = {
+          time: next,
+          playing: playingRef.current,
+          audioGlobal,
+          lastNow: now,
+          tickCount: ((window as any).__playbackTick?.tickCount ?? 0) + 1,
+        };
+      }
     };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [playing, lesson.beats, lesson.durationSec]);
+
+    const rafLoop = () => {
+      tick();
+      if (playingRef.current) {
+        frame = requestAnimationFrame(rafLoop);
+      }
+    };
+    frame = requestAnimationFrame(rafLoop);
+
+    // Resilient fallback interval to ensure continuous synchronization
+    // even if requestAnimationFrame is throttled by browser in background or heavy load
+    timerId = setInterval(tick, 50);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      clearInterval(timerId);
+    };
+  }, [playing, lesson.beats, lesson.durationSec, isSampleLesson]);
 
   const play = useCallback(() => {
     if (timeRef.current >= lesson.durationSec) {
@@ -97,11 +166,11 @@ export function useLessonPlayback(lesson: LessonRecap) {
     (nextTime: number) => {
       const clamped = Math.max(0, Math.min(lesson.durationSec, nextTime));
 
-      // Re-arm any knowledge checks located ahead of the new seek time
+      // Re-arm any knowledge checks located at or ahead of the new seek time
       setDismissedCheckBeatIds((prev) => {
         const nextState = { ...prev };
         for (const beat of lesson.beats) {
-          if (beat.knowledgeCheck && clamped < beat.startSec) {
+          if (beat.knowledgeCheck && clamped <= beat.startSec + 0.05) {
             delete nextState[beat.id];
           }
         }
@@ -134,8 +203,12 @@ export function useLessonPlayback(lesson: LessonRecap) {
     dismissedChecksRef.current = { ...dismissedChecksRef.current, [beatId]: true };
     setSelectedOptionId(null);
     setSubmitted(false);
+    const advanceTime = Math.min(lesson.durationSec, timeRef.current + 0.05);
+    timeRef.current = advanceTime;
+    setTime(advanceTime);
+    playingRef.current = true;
     setPlaying(true);
-  }, [submitted, activeCheckBeat]);
+  }, [submitted, activeCheckBeat, lesson.durationSec]);
 
   const goToBeat = useCallback(
     (beatId: string) => {
@@ -143,7 +216,7 @@ export function useLessonPlayback(lesson: LessonRecap) {
       if (!beat) {
         return;
       }
-      seek(beat.startSec + 0.01);
+      seek(beat.startSec);
     },
     [lesson.beats, seek],
   );

@@ -12,9 +12,14 @@ const shots: Record<CameraShotId, { position: Vector3; target: Vector3 }> = {
     target: new Vector3(1.35, 1.45, 0.2),
   },
   board: {
-    position: new Vector3(-0.85, 1.66, 2.35),
-    target: new Vector3(-0.85, 1.52, -1.82),
+    position: new Vector3(-0.85, 1.88, 1.15),
+    target: new Vector3(-0.85, 1.88, -1.82),
   },
+};
+
+const boardMaximizeShot = {
+  position: new Vector3(-0.85, 1.90, 0.45),
+  target: new Vector3(-0.85, 1.90, -1.82),
 };
 
 export class CameraRig {
@@ -30,20 +35,21 @@ export class CameraRig {
     camera.setTarget(this.goalTarget);
   }
 
-  goTo(shot: CameraShotId): void {
-    this.goalPosition = shots[shot].position.clone();
-    this.goalTarget = shots[shot].target.clone();
+  goTo(shot: CameraShotId, maximized = false): void {
+    const targetShot = shot === "board" && maximized ? boardMaximizeShot : shots[shot];
+    this.goalPosition = targetShot.position.clone();
+    this.goalTarget = targetShot.target.clone();
   }
 
   update(): void {
     Vector3.LerpToRef(
       this.camera.position,
       this.goalPosition,
-      0.045,
+      0.08,
       this.camera.position,
     );
     const currentTarget = this.camera.getTarget();
-    Vector3.LerpToRef(currentTarget, this.goalTarget, 0.045, currentTarget);
+    Vector3.LerpToRef(currentTarget, this.goalTarget, 0.08, currentTarget);
     this.camera.setTarget(currentTarget);
   }
 }

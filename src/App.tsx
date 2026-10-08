@@ -1,5 +1,11 @@
 import { useMemo, useState } from "react";
-import { unlockAudioSystem } from "./audio/AudioController";
+import { getSharedAudioController, unlockAudioSystem } from "./audio/AudioController";
+import {
+  getStoredCompletedModules,
+  getStoredModuleProgress,
+  saveCompletedModule,
+  saveModuleProgress,
+} from "./components/CourseTrainingTimer";
 import { ACCESS_CODE, catalog, getModule } from "./content/catalog";
 import { getLessonRecap } from "./content/registry";
 import { LessonPlayer } from "./lesson/LessonPlayer";
@@ -13,7 +19,12 @@ export function App() {
   const [view, setView] = useState<AppView>("welcome");
   const [accessError, setAccessError] = useState<string | null>(null);
   const [selectedModuleId, setSelectedModuleId] = useState<string>("module-1");
-  const [completedModuleIds, setCompletedModuleIds] = useState<string[]>([]);
+  const [completedModuleIds, setCompletedModuleIds] = useState<string[]>(() => {
+    return getStoredCompletedModules();
+  });
+  const [moduleProgress, setModuleProgress] = useState<Record<string, number>>(() => {
+    return getStoredModuleProgress();
+  });
 
   const currentModule = useMemo(() => {
     return getModule(selectedModuleId) ?? catalog[0];
@@ -27,23 +38,18 @@ export function App() {
   }, [selectedModuleId, currentModule]);
 
   const handleCodeSubmit = (code: string) => {
-    if (code.trim().toUpperCase() === ACCESS_CODE.toUpperCase()) {
+    if (code.trim() === ACCESS_CODE) {
       setAccessError(null);
       setView("module-select");
     } else {
-      setAccessError(`Invalid access code. Please use the prototype code: ${ACCESS_CODE}`);
+      setAccessError("Invalid access code. Please check the code and try again.");
     }
   };
 
-  const handleDemoAccess = () => {
-    setAccessError(null);
-    setView("module-select");
-  };
-
   const handleSelectModule = (moduleId: string) => {
-    unlockAudioSystem();
-    setSelectedModuleId(moduleId);
     const recap = getLessonRecap(moduleId) ?? getLessonRecap("module-1");
+    unlockAudioSystem(recap?.beats[0]?.audioSrc);
+    setSelectedModuleId(moduleId);
     if (recap) {
       setView("lesson-player");
     }
@@ -55,13 +61,20 @@ export function App() {
       <div className="landing-layout">
         <LandingBackground />
         {view === "welcome" ? (
-          <WelcomeScreen onStart={() => setView("access")} />
+          <WelcomeScreen
+            onStart={() => {
+              setAccessError(null);
+              setView("access");
+            }}
+          />
         ) : (
           <AccessCodeScreen
             error={accessError}
             onSubmit={handleCodeSubmit}
-            onDemoAccess={handleDemoAccess}
-            onBack={() => setView("welcome")}
+            onBack={() => {
+              setAccessError(null);
+              setView("welcome");
+            }}
           />
         )}
       </div>
@@ -74,6 +87,7 @@ export function App() {
       <ModuleSelectScreen
         modules={catalog}
         completedModuleIds={completedModuleIds}
+        moduleProgress={moduleProgress}
         onSelectModule={handleSelectModule}
         onBack={() => setView("access")}
       />
@@ -81,10 +95,20 @@ export function App() {
   }
 
   const handleExitLesson = () => {
+    getSharedAudioController().cancel();
     setView("module-select");
   };
 
+  const handleProgressUpdate = (moduleId: string, seconds: number) => {
+    saveModuleProgress(moduleId, seconds);
+    setModuleProgress((prev) => ({
+      ...prev,
+      [moduleId]: Math.max(prev[moduleId] ?? 0, Math.round(seconds)),
+    }));
+  };
+
   const handleCompleteModule = (moduleId: string) => {
+    saveCompletedModule(moduleId);
     setCompletedModuleIds((prev) => (prev.includes(moduleId) ? prev : [...prev, moduleId]));
   };
 
@@ -92,9 +116,11 @@ export function App() {
   if (view === "lesson-player" && currentRecap) {
     return (
       <LessonPlayer
+        key={currentRecap.id}
         lesson={currentRecap}
         onExit={handleExitLesson}
         onCompleteModule={handleCompleteModule}
+        onProgressUpdate={handleProgressUpdate}
       />
     );
   }

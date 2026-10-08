@@ -6,7 +6,7 @@ export const moduleSixRecap: LessonRecap = {
   title: "Module 6 · Putting AI into Practice",
   durationSec: 600,
   prototypeNote:
-    "Full production recap (~10 minutes) · Grounded in Level 1 Handbook (Workplace Application & 30-Day Commitment Sheet).",
+    "Full production recap (~10 minutes) · Workplace friction audit, citation verification, ROI quantification, and 30-day adoption roadmap.",
   beats: [
     {
       id: "m6-intro",
@@ -21,6 +21,7 @@ export const moduleSixRecap: LessonRecap = {
       },
       narration:
         "Welcome to Module 6: Putting AI into Practice. In the original in-person training, this module culminated in a group challenge. In this self-paced catch-up recap, we translate those capstone principles directly to where they matter most: your own desk. Across Modules 1 through 5, you mastered prompt briefing, document comparison, custom agents, dynamic presentations, and ethical guardrails. Now, we walk through the proven 8-step journey to turn these skills into measurable workplace productivity.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-6/intro.mp3`,
     },
     {
       id: "m6-pipeline",
@@ -71,13 +72,14 @@ export const moduleSixRecap: LessonRecap = {
           {
             stepNumber: 8,
             title: "Build 30-Day Habit",
-            subtitle: "Lock in daily sustained adoption with the Handbook Commitment Sheet.",
+            subtitle: "Lock in daily sustained adoption with your personal 30-day action plan.",
             highlight: true,
           },
         ],
       },
       narration:
         "Here is your 8-stage roadmap for turning AI literacy into daily practice. We start with a genuine recurring task on your desk, diagnose the specific operational bottleneck, select the right AI capability from Modules 1 to 5, execute with structured prompts, validate citations against hallucinations, apply human review, improve the process, and anchor it into your routine through the 30-day commitment framework.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-6/pipeline.mp3`,
     },
     {
       id: "m6-identify-friction",
@@ -113,6 +115,7 @@ export const moduleSixRecap: LessonRecap = {
       },
       narration:
         "Do not invent hypothetical use cases. Look at your calendar and inbox from the past month. High-value AI adoption targets three specific areas: friction at cross-department handoffs where information stalls between teams, document-heavy reading that burns hours of manual review, and repetitive inquiries that interrupt your deep work. Pick one real task to start.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-6/identify-friction.mp3`,
     },
     {
       id: "m6-tool-matching",
@@ -152,6 +155,7 @@ export const moduleSixRecap: LessonRecap = {
       },
       narration:
         "Once you have chosen your workplace task, match it to the right toolset from the course. If you are comparing contract versions or budgets, use the Module 2 Master Comparison Prompt. If you spend hours answering team policy questions, build a grounded Module 3 agent. If you need leadership support for a process change, use the Module 4 presentation blueprint. And always enforce Module 5 privacy protections before entering any data.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-6/tool-matching.mp3`,
     },
     {
       id: "m6-validation-audit",
@@ -160,7 +164,7 @@ export const moduleSixRecap: LessonRecap = {
       camera: "board",
       board: {
         kind: "scorecardTable",
-        heading: "Self-Administered Solo Verification Matrix (Handbook p. 28 & 57)",
+        heading: "Self-Administered Solo Verification Matrix",
         headers: ["Validation Phase", "Learner Action Required", "Pass Criteria", "Risk Mitigated"],
         rows: [
           {
@@ -200,10 +204,11 @@ export const moduleSixRecap: LessonRecap = {
             highlight: "red",
           },
         ],
-        note: "Handbook Principle: Never present an AI solution to colleagues or management until you have stress-tested it yourself.",
+        note: "Core Workplace Principle: Never present an AI solution to colleagues or management until you have stress-tested it yourself.",
       },
       narration:
         "In the classroom, external judges tested student solutions. In the workplace, you are your own auditor. Before sharing an AI-generated output or custom agent with your team, run the self-administered verification matrix on the board: verify citations, confirm in-domain accuracy, test boundary refusals, and ensure zero PII is exposed. This guarantees audit readiness and protects your professional credibility.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-6/validation-audit.mp3`,
     },
     {
       id: "m6-roi-formulation",
@@ -212,7 +217,7 @@ export const moduleSixRecap: LessonRecap = {
       camera: "board",
       board: {
         kind: "kpiVariance",
-        heading: "Operational ROI Formulation: Quantifying Recovered Capacity (Handbook pp. 55 & 58)",
+        heading: "Operational ROI Formulation: Quantifying Recovered Capacity",
         metrics: [
           {
             label: "Weekly Time Saved",
@@ -243,12 +248,13 @@ export const moduleSixRecap: LessonRecap = {
             subtext: "Based on fully loaded labor rate",
           },
         ],
-        narrativeTitle: "The ROI Calculation Formula (Handbook p. 58)",
+        narrativeTitle: "The Enterprise ROI Calculation Formula",
         narrativeText:
           "Formula: [Weekly Hours Saved per Person] × [Team Size] × [52 Weeks] = Annual Recovered Capacity.\nTranslating AI from a personal convenience into an executive proposal requires speaking the language of leadership. When you can demonstrate that streamlining contract comparisons or building an internal PO assistant recovers thousands of hours and eliminates costly delays, management approval becomes straightforward.",
       },
       narration:
         "Executives fund measurable business impact, not technology novelties. Use the ROI formula on your screen: multiply weekly hours saved by your team size across the year to show recovered strategic capacity. For example, saving four and a half hours a week across thirty team members returns over seven thousand hours annually—worth more than RM 280,000 in redirected capacity.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-6/roi-formulation.mp3`,
     },
     {
       id: "m6-propose-pitch",
@@ -257,7 +263,7 @@ export const moduleSixRecap: LessonRecap = {
       camera: "board",
       board: {
         kind: "processFlow",
-        heading: "Manager Decision Briefing: 7-Slide Workplace Pitch (Handbook p. 56)",
+        heading: "Manager Decision Briefing: 7-Slide Workplace Pitch",
         steps: [
           {
             stepNumber: 1,
@@ -300,6 +306,7 @@ export const moduleSixRecap: LessonRecap = {
       },
       narration:
         "When presenting your AI improvement to your department head or steering committee, use the 7-slide consulting structure. Start with the operational friction, share the audit data, display your Napkin diagram showing before and after workflows, prove the prototype is safe, show the quantified ROI, and conclude with a specific ask: a 30-day departmental pilot.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-6/propose-pitch.mp3`,
     },
     {
       id: "m6-30day-commitment",
@@ -308,10 +315,10 @@ export const moduleSixRecap: LessonRecap = {
       camera: "board",
       board: {
         kind: "checklistCard",
-        heading: "The 30-Day Sustained AI Commitment Sheet (Handbook pp. 58–59)",
+        heading: "The 30-Day Sustained AI Workplace Adoption Roadmap",
         categories: [
           {
-            title: "Personal Commitment (Handbook p. 59)",
+            title: "Personal Workplace Commitment",
             items: [
               "One Real Task: Selected single recurring workflow on my desk",
               "One Reusable Prompt: Master template saved in personal library",
@@ -320,7 +327,7 @@ export const moduleSixRecap: LessonRecap = {
             ],
           },
           {
-            title: "6 Sustained Practice Rules (Handbook p. 58)",
+            title: "6 Sustained Practice Rules",
             items: [
               "Rule 1: Start with 1 real task — never practice on artificial work",
               "Rule 2: Refine prompts, don't restart — adjust context and constraints",
@@ -332,49 +339,16 @@ export const moduleSixRecap: LessonRecap = {
           },
         ],
         footerNote:
-          "Handbook Contract: 'AI mastery is not an event; it is a daily workplace habit developed over the 30 days following training.'",
+          "Key Principle: 'AI mastery is not an event; it is a daily workplace habit developed over the 30 days following training.'",
       },
       narration:
-        "Training only creates value if it changes your everyday behavior. Pages 58 and 59 of the Level 1 Handbook lay out the 30-Day Commitment Sheet and the Six Sustained Practice Rules: start with one real task, refine prompts rather than restarting, build one small agent, reuse templates, keep human judgment at the center, and share proven wins with your colleagues. Sign your personal commitment to apply these tools starting this week.",
-    },
-    {
-      id: "m6-knowledge-check",
-      startSec: 560,
-      hudLabel: "9. Knowledge Check",
-      camera: "instructor",
-      board: {
-        kind: "takeaway",
-        heading: "Module 6 Knowledge Check",
-        text: "What is the most effective approach for an individual employee to sustain AI productivity gains after completing Level 1 training?",
-      },
-      narration: "Let us complete our final knowledge check across the curriculum.",
-      knowledgeCheck: {
-        question:
-          "According to the Level 1 Handbook, how does an individual employee transform AI training concepts into sustained workplace impact?",
-        options: [
-          {
-            id: "a",
-            label: "Wait for company-wide enterprise software upgrades before trying any prompts.",
-          },
-          {
-            id: "b",
-            label:
-              "Select one real desk-level task, apply structured prompting or grounded agents, validate citations, quantify time saved, and execute the 30-Day Commitment Sheet.",
-          },
-          {
-            id: "c",
-            label: "Use public consumer AI tools for unredacted customer data to maximize personal speed.",
-          },
-        ],
-        correctId: "b",
-        confirmText:
-          "Correct! Real workplace transformation happens by applying skills to one genuine task, validating against hallucinations, calculating ROI, and maintaining a disciplined 30-day practice habit.",
-      },
+        "Training only creates value if it changes your everyday behavior. Here are the Six Sustained Practice Rules for your 30-day adoption roadmap: start with one real task, refine prompts rather than restarting, build one small agent, reuse templates, keep human judgment at the center, and share proven wins with your colleagues. Make a personal commitment to apply these tools starting this week.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-6/30day-commitment.mp3`,
     },
     {
       id: "m6-completion",
-      startSec: 580,
-      hudLabel: "10. Level 1 Complete!",
+      startSec: 540,
+      hudLabel: "9. Level 1 Completion & Takeaways",
       camera: "wide",
       board: {
         kind: "takeaway",
@@ -382,7 +356,22 @@ export const moduleSixRecap: LessonRecap = {
         text: "Congratulations on completing Level 1!\n\n• Module 1: AI Basics & Prompting (Token prediction, CRE framework, temperature)\n• Module 2: Smart Comparison (7-step workflow, master prompts, variance & exceptions)\n• Module 3: Build AI Agents (Persona, grounding files, ANS·BAIT·REFUSE testing)\n• Module 4: Dynamic Presentation & Report (3-tool stack, 7-slide deck, reverse expansion)\n• Module 5: AI Ethics, Privacy & Security (AIGE 2024, PDPA 2024, red lines, zero retention)\n• Module 6: Putting AI into Practice (Desk friction audit, ROI calculation, 30-day habit)\n\nYou are equipped to lead practical AI adoption on your desk and in your organization.",
       },
       narration:
-        "Congratulations! You have completed all six modules of Level 1: AI Foundations & Literacy. You now possess a comprehensive, enterprise-ready toolkit: knowing how models predict, how to write structured CRE briefs, how to compare multi-version documents, how to build and stress-test custom agents, how to create visual presentations, how to protect corporate data under PDPA 2024, and how to drive continuous productivity on your desk. Put these skills into practice today!",
+        "Congratulations! You have completed all six modules of Level 1: AI Foundations & Literacy. You now possess a comprehensive, enterprise-ready toolkit: knowing how models predict, how to write structured CRE briefs, how to compare multi-version documents, how to build and stress-test custom agents, how to create visual presentations, how to protect corporate data under PDPA 2024, and how to drive continuous productivity on your desk. Put these skills into practice today. Proceed to the knowledge check and confidence self-report to complete the program.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-6/completion.mp3`,
+    },
+    {
+      id: "m6-assessment",
+      startSec: 580,
+      hudLabel: "10. Knowledge Check (Quiz & Report)",
+      camera: "instructor",
+      board: {
+        kind: "takeaway",
+        heading: "Module 6 Knowledge Check & Self-Report",
+        text: "Complete the 5-question knowledge check and 4-item confidence self-report to complete Module 6.",
+      },
+      narration:
+        "Now, let us complete the final five-question knowledge check and confidence self-report for Level 1.",
+      audioSrc: `${import.meta.env.BASE_URL}assets/audio/awang/module-6/assessment.mp3`,
     },
   ],
 };
