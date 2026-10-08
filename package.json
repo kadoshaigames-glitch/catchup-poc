@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "generate-narration": "node scripts/generate_all_awang_narration.mjs"
+    "generate-narration": "node scripts/generate_all_awang_narration.mjs",
+    "deploy": "npm run build && node scripts/deploy_to_catchup_deploy.js"
   },
   "dependencies": {
     "@babylonjs/core": "^8.37.0",
